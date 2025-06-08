@@ -1,0 +1,37 @@
+GET http://localhost:5000/users
+
+### Create User
+POST http://localhost:5000/users/
+Content-Type: application/json
+
+{
+    "username":"ghinklrsi",
+    "email":"ghinova@gmail",
+    "password":"12345678",
+    "full_name":"Ghinova Klarisa Irawadi",
+    "phone_number":"08123456789",
+    "role":"user"
+}
+
+### Get User by ID
+GET   http://localhost:5000/users/1
+
+### Update User
+PATCH  http://localhost:5000/users/1
+Content-Type: application/json
+
+{
+    "username":"admin",
+    "email":"admin@gmail",
+    "password":"admin123",
+    "full_name":"Admin Tiket Gercep",
+    "phone_number":"08123456788",
+    "role":"admin"
+}
+
+### Delete User
+DELETE http://localhost:5000/users/1
+
+### Get All Bookings
+GET http://localhost:5000/bookings
+
