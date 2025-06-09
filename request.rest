@@ -1,37 +1,267 @@
-GET http://localhost:5000/users
+
+###################################################################
+#                        USER API TESTS                          #
+###################################################################
+
+### Get All Users
+GET http://localhost:5000/api/users
 
 ### Create User
-POST http://localhost:5000/users/
+POST http://localhost:5000/api/users/
 Content-Type: application/json
 
 {
     "username":"ghinklrsi",
-    "email":"ghinova@gmail",
+    "email":"ghinova@gmail.com",
     "password":"12345678",
     "full_name":"Ghinova Klarisa Irawadi",
-    "phone_number":"08123456789",
+    "phone":"08123456789",
     "role":"user"
 }
 
 ### Get User by ID
-GET   http://localhost:5000/users/1
+GET http://localhost:5000/api/users/1
 
 ### Update User
-PATCH  http://localhost:5000/users/1
+PATCH http://localhost:5000/api/users/1
 Content-Type: application/json
 
 {
     "username":"admin",
-    "email":"admin@gmail",
+    "email":"admin@gmail.com",
     "password":"admin123",
     "full_name":"Admin Tiket Gercep",
-    "phone_number":"08123456788",
+    "phone":"08123456788",
     "role":"admin"
 }
 
 ### Delete User
-DELETE http://localhost:5000/users/1
+DELETE http://localhost:5000/api/users/1
+
+###################################################################
+#                        MOVIE API TESTS                         #
+###################################################################
+
+### Get All Movies
+GET http://localhost:5000/api/movies
+
+### Create Movie
+POST http://localhost:5000/api/movies/
+Content-Type: application/json
+
+{
+    "title":"Avatar: The Way of Water",
+    "genre":"Action, Adventure, Fantasy",
+    "duration":"192",
+    "rating":"PG-13",
+    "synopsis":"Jake Sully and Ney'tiri have formed a family and are doing everything to stay together.",
+    "release_date":"2022-12-16",
+    "poster_url":"https://example.com/avatar2-poster.jpg"
+}
+
+### Get Movie by ID
+GET http://localhost:5000/api/movies/1
+
+### Update Movie
+PATCH http://localhost:5000/api/movies/1
+Content-Type: application/json
+
+{
+    "title":"Avatar: The Way of Water (Updated)",
+    "genre":"Action, Adventure, Fantasy, Sci-Fi",
+    "duration":"192",
+    "rating":"PG",
+    "synopsis":"Updated synopsis for Avatar sequel."
+}
+
+### Delete Movie
+DELETE http://localhost:5000/api/movies/1
+
+###################################################################
+#                       STUDIO API TESTS                         #
+###################################################################
+
+### Get All Studios
+GET http://localhost:5000/api/studios
+
+### Create Studio
+POST http://localhost:5000/api/studios/
+Content-Type: application/json
+
+{
+    "name":"Studio A",
+    "capacity":"150",
+    "type":"IMAX"
+}
+
+### Get Studio by ID
+GET http://localhost:5000/api/studios/1
+
+### Update Studio
+PATCH http://localhost:5000/api/studios/1
+Content-Type: application/json
+
+{
+    "name":"Studio A Premium",
+    "capacity":"120",
+    "type":"Premium"
+}
+
+### Delete Studio
+DELETE http://localhost:5000/api/studios/1
+
+###################################################################
+#                        SEAT API TESTS                          #
+###################################################################
+
+### Get All Seats
+GET http://localhost:5000/api/seats
+
+### Create Seat
+POST http://localhost:5000/api/seats/
+Content-Type: application/json
+
+{
+    "studio_id":"1",
+    "seat_number":"A1",
+    "seat_type":"Regular"
+}
+
+### Get Seat by ID
+GET http://localhost:5000/api/seats/1
+
+### Update Seat
+PATCH http://localhost:5000/api/seats/1
+Content-Type: application/json
+
+{
+    "seat_number":"A1",
+    "seat_type":"Premium"
+}
+
+### Delete Seat
+DELETE http://localhost:5000/api/seats/1
+
+###################################################################
+#                      SHOWTIME API TESTS                        #
+###################################################################
+
+### Get All Showtimes
+GET http://localhost:5000/api/showtimes
+
+### Create Showtime
+POST http://localhost:5000/api/showtimes/
+Content-Type: application/json
+
+{
+    "movie_id":"1",
+    "studio_id":"1",
+    "showtime_date":"2024-01-15",
+    "showtime_time":"19:30:00",
+    "price":"50000"
+}
+
+### Get Showtime by ID
+GET http://localhost:5000/api/showtimes/1
+
+### Update Showtime
+PATCH http://localhost:5000/api/showtimes/1
+Content-Type: application/json
+
+{
+    "showtime_date":"2024-01-16",
+    "showtime_time":"21:00:00",
+    "price":"60000"
+}
+
+### Delete Showtime
+DELETE http://localhost:5000/api/showtimes/1
+
+###################################################################
+#                      BOOKING API TESTS                         #
+###################################################################
 
 ### Get All Bookings
-GET http://localhost:5000/bookings
+GET http://localhost:5000/api/bookings
+
+### Create Booking
+POST http://localhost:5000/api/bookings/
+Content-Type: application/json
+
+{
+    "user_id":"1",
+    "showtime_id":"1",
+    "booking_date":"2024-01-10",
+    "total_price":"100000",
+    "status":"confirmed"
+}
+
+### Get Booking by ID
+GET http://localhost:5000/api/bookings/1
+
+### Update Booking
+PATCH http://localhost:5000/api/bookings/1
+Content-Type: application/json
+
+{
+    "status":"cancelled",
+    "total_price":"0"
+}
+
+### Delete Booking
+DELETE http://localhost:5000/api/bookings/1
+
+###################################################################
+#                    BOOKING SEAT API TESTS                      #
+###################################################################
+
+### Get All Booking Seats
+GET http://localhost:5000/api/booking-seats
+
+### Create Booking Seat (Link Booking to Seat)
+POST http://localhost:5000/api/booking-seats/
+Content-Type: application/json
+
+{
+    "booking_id":"1",
+    "seat_id":"1"
+}
+
+### Get Booking Seat by ID
+GET http://localhost:5000/api/booking-seats/1
+
+### Update Booking Seat
+PATCH http://localhost:5000/api/booking-seats/1
+Content-Type: application/json
+
+{
+    "booking_id":"1",
+    "seat_id":"2"
+}
+
+### Delete Booking Seat
+DELETE http://localhost:5000/api/booking-seats/1
+
+###################################################################
+#                      ADVANCED QUERIES                          #
+###################################################################
+
+### Get Seats by Studio ID
+GET http://localhost:5000/api/seats?studio_id=1
+
+### Get Showtimes by Movie ID
+GET http://localhost:5000/api/showtimes?movie_id=1
+
+### Get Bookings by User ID
+GET http://localhost:5000/api/bookings?user_id=1
+
+### Get Available Seats for a Showtime
+GET http://localhost:5000/api/seats/available?showtime_id=1
+
+###################################################################
+#                       HEALTH CHECK                             #
+###################################################################
+
+### Server Health Check
+GET http://localhost:5000/api/health
 
