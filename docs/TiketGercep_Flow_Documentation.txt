@@ -1,0 +1,946 @@
+# TIKET GERCEP - UAS DOCUMENTATION (SIMPLIFIED)
+===============================================
+
+## 1. GAMBARAN UMUM SISTEM
+--------------------------
+TiketGercep adalah aplikasi pemesanan tiket bioskop sederhana untuk UAS Pemrograman Web Lanjut yang mendemonstrasikan:
+- **JavaScript Skills**: Frontend (React) + Backend (Node.js/Express)
+- **API Integration**: REST API dengan Axios
+- **Database Connectivity**: MySQL dengan Sequelize ORM
+- **CRUD Operations**: Create, Read, Update, Delete untuk semua entitas
+- **Simple Booking System**: User memilih film, jadwal, kursi dan booking
+
+**SIMPLIFIED FEATURES (UAS-APPROPRIATE):**
+- Admin: CRUD Movies, Studios, Showtimes
+- User: View Movies, Book Tickets, View Bookings
+- **Simple Role Management**: localStorage-based role switching (no JWT complexity)
+- No payment integration
+- No real-time features
+- Focus on core JavaScript + API + Database skills
+
+### SIMPLE AUTHENTICATION APPROACH:
+Instead of complex JWT authentication, we use:
+1. **localStorage role management**: Store role ('admin' or 'user') in browser
+2. **Simple role switching**: Toggle between Admin/User mode with buttons
+3. **Basic API protection**: Check role before allowing CRUD operations
+4. **No password complexity**: Just username + simple password for demo
+
+## 2. STRUKTUR DATABASE & MODEL BACKEND
+---------------------------------------
+
+### A. Model yang Sudah Ada:
+
+1. **USER** (users)
+   - user_id (PK, Auto Increment)
+   - username (Unique)
+   - email (Unique)
+   - password
+   - full_name
+   - phone_number
+   - role (admin/user)
+   - created_at, updated_at
+
+2. **MOVIE** (movies)
+   - movie_id (PK, Auto Increment)
+   - title
+   - synopsis
+   - duration (menit)
+   - genre
+   - rating (G, PG-13, R, NC-17)
+   - poster_url
+   - trailer_url
+   - status (now_playing, coming_soon, ended)
+   - release_date
+   - created_at, updated_at
+
+3. **STUDIO** (studios)
+   - studio_id (PK, Auto Increment)
+   - studio_name
+   - total_seats
+   - rows
+   - seats_per_row
+   - created_at, updated_at
+
+4. **SEAT** (seats)
+   - seat_id (PK, Auto Increment)
+   - studio_id (FK)
+   - seat_row (A, B, C, etc.)
+   - seat_number (1, 2, 3, etc.)
+   - seat_label (A1, A2, B1, etc.)
+   - created_at, updated_at
+
+5. **SHOWTIME** (showtimes)
+   - showtime_id (PK, Auto Increment)
+   - movie_id (FK)
+   - studio_id (FK)
+   - show_date
+   - show_time
+   - ticket_price
+   - created_at, updated_at
+
+6. **BOOKING** (bookings)
+   - booking_id (PK, Auto Increment)
+   - user_id (FK)
+   - showtime_id (FK)
+   - booking_code (Unique)
+   - total_seats
+   - total_price
+   - status (pending, confirmed, cancelled)
+   - booking_date
+   - created_at, updated_at
+
+### B. Relasi Antar Model:
+- User → Booking (One to Many)
+- Movie → Showtime (One to Many)
+- Studio → Showtime (One to Many)
+- Studio → Seat (One to Many)
+- Showtime → Booking (One to Many)
+
+## 3. API ENDPOINTS YANG SUDAH ADA
+-----------------------------------
+
+### Users:
+- GET /users - Ambil semua user
+- GET /users/:id - Ambil user berdasarkan ID
+- POST /users - Buat user baru
+- PUT/PATCH /users/:id - Update user
+- DELETE /users/:id - Hapus user
+
+### Movies:
+- GET /movies - Ambil semua film
+- GET /movies/:id - Ambil film berdasarkan ID
+- POST /movies - Buat film baru
+- PUT/PATCH /movies/:id - Update film
+- DELETE /movies/:id - Hapus film
+
+### Studios:
+- GET /studios - Ambil semua studio
+- GET /studios/:id - Ambil studio berdasarkan ID
+- POST /studios - Buat studio baru
+- PUT/PATCH /studios/:id - Update studio
+- DELETE /studios/:id - Hapus studio
+
+### Seats:
+- GET /seats - Ambil semua kursi
+- GET /seats/:id - Ambil kursi berdasarkan ID
+- POST /seats - Buat kursi baru
+- PUT/PATCH /seats/:id - Update kursi
+- DELETE /seats/:id - Hapus kursi
+
+### Showtimes:
+- GET /showtimes - Ambil semua jadwal
+- GET /showtimes/:id - Ambil jadwal berdasarkan ID
+- POST /showtimes - Buat jadwal baru
+- PUT/PATCH /showtimes/:id - Update jadwal
+- DELETE /showtimes/:id - Hapus jadwal
+
+### Bookings:
+- GET /bookings - Ambil semua booking
+- GET /bookings/:id - Ambil booking berdasarkan ID
+- POST /bookings - Buat booking baru
+- PUT/PATCH /bookings/:id - Update booking
+- DELETE /bookings/:id - Hapus booking
+
+## 4. FLOW APLIKASI FRONTEND YANG HARUS DIBUAT
+----------------------------------------------
+
+### A. PUBLIC FLOW (User Tidak Login):
+1. **Landing Page**
+   - Header dengan logo dan menu login/register
+   - Hero section dengan film populer
+   - Daftar film yang sedang tayang
+   - Footer
+
+2. **Movie List Page**
+   - Filter berdasarkan genre, rating
+   - Search film
+   - Grid/list view film dengan poster, title, genre, rating
+   - Pagination
+
+3. **Movie Detail Page**
+   - Poster film besar
+   - Informasi lengkap (title, synopsis, duration, genre, rating, release_date)
+   - Trailer player (jika ada)
+   - Tombol "Book Now" (redirect ke login jika belum login)
+   - Jadwal tayang
+
+4. **Login Page**
+   - Form login (username/email, password)
+   - Link ke register
+   - Forgot password (optional)
+
+5. **Register Page**
+   - Form register (username, email, password, full_name, phone_number)
+   - Link ke login
+
+### B. USER FLOW (User Sudah Login):
+1. **Dashboard/Home**
+   - Welcome message
+   - Film populer
+   - Booking history (recent)
+   - Quick actions
+
+2. **Movie Booking Flow**
+   - Movie selection (dari movie list/detail)
+   - Showtime selection (tanggal, waktu, studio, harga)
+   - Seat selection (visual seat map)
+   - Booking confirmation (review pesanan)
+   - Payment simulation (optional untuk UAS)
+   - Booking success (booking code)
+
+3. **Profile Page**
+   - Edit profile information
+   - Change password
+   - View booking history
+
+4. **Booking History**
+   - List semua booking user
+   - Filter berdasarkan status, tanggal
+   - Detail booking
+   - Cancel booking (jika masih pending)
+
+### C. ADMIN FLOW:
+1. **Admin Dashboard**
+   - Statistics (total users, movies, bookings)
+   - Quick actions
+
+2. **Movie Management**
+   - List movies dengan action (edit, delete)
+   - Add new movie form
+   - Edit movie form
+
+3. **Studio Management**
+   - List studios dengan action (edit, delete)
+   - Add new studio form
+   - Auto-generate seats untuk studio
+
+4. **Showtime Management**
+   - List showtimes dengan movie dan studio info
+   - Add new showtime form
+   - Calendar view (optional)
+
+5. **Booking Management**
+   - List all bookings
+   - Update booking status
+   - View booking details
+
+6. **User Management**
+   - List users
+   - Edit user role
+   - Ban/unban user (optional)
+
+## 5. HALAMAN FRONTEND YANG HARUS DIBUAT
+----------------------------------------
+
+### A. Layout Components:
+1. **Navbar** - Navigation dengan logo, menu, login/logout button
+2. **Footer** - Copyright, contact info
+3. **Sidebar** - Untuk admin panel
+
+### B. Public Pages:
+1. **HomePage** - Landing page dengan film populer
+2. **MovieListPage** - Daftar semua film
+3. **MovieDetailPage** - Detail film dan jadwal
+4. **LoginPage** - Form login
+5. **RegisterPage** - Form register
+
+### C. User Pages:
+1. **UserDashboard** - Dashboard user
+2. **BookingPage** - Flow pemesanan
+3. **SeatSelectionPage** - Pilih kursi
+4. **BookingConfirmPage** - Konfirmasi pemesanan
+5. **BookingSuccessPage** - Sukses booking
+6. **ProfilePage** - Edit profile
+7. **BookingHistoryPage** - History booking
+
+### D. Admin Pages:
+1. **AdminDashboard** - Dashboard admin
+2. **AdminMoviePage** - Manage movies
+3. **AdminStudioPage** - Manage studios
+4. **AdminShowtimePage** - Manage showtimes
+5. **AdminBookingPage** - Manage bookings
+6. **AdminUserPage** - Manage users
+
+## 6. YANG HARUS DITAMBAHKAN DI BACKEND
+--------------------------------------
+
+### A. Model Baru yang Perlu Dibuat:
+1. **BOOKING_SEAT** (booking_seats) - Junction table untuk many-to-many booking dan seat
+   - booking_seat_id (PK)
+   - booking_id (FK)
+   - seat_id (FK)
+   - created_at, updated_at
+
+### B. API Endpoints Tambahan yang Diperlukan:
+
+1. **Simple Authentication (localStorage-based):**
+   - POST /auth/login - Simple login (check username/password, return user data)
+   - POST /auth/register - Register user baru
+   - POST /auth/logout - Clear server session (optional)
+   - GET /auth/validate - Validate stored user data
+
+### SIMPLIFIED AUTHENTICATION IMPLEMENTATION:
+
+**Frontend (localStorage approach):**
+```javascript
+// Store user role and basic info in localStorage
+const loginUser = (userData) => {
+  localStorage.setItem('tiketgercep_user', JSON.stringify({
+    user_id: userData.user_id,
+    username: userData.username,
+    role: userData.role,
+    full_name: userData.full_name
+  }));
+};
+
+// Get current user from localStorage
+const getCurrentUser = () => {
+  const user = localStorage.getItem('tiketgercep_user');
+  return user ? JSON.parse(user) : null;
+};
+
+// Check if user is admin
+const isAdmin = () => {
+  const user = getCurrentUser();
+  return user && user.role === 'admin';
+};
+
+// Role switching for demo purposes
+const switchRole = () => {
+  const user = getCurrentUser();
+  if (user) {
+    user.role = user.role === 'admin' ? 'user' : 'admin';
+    localStorage.setItem('tiketgercep_user', JSON.stringify(user));
+  }
+};
+```
+
+**Backend (simple role checking):**
+```javascript
+// Simple middleware to check role (no JWT)
+const requireAdmin = (req, res, next) => {
+  const { role } = req.body; // or from headers
+  if (role !== 'admin') {
+    return res.status(403).json({ message: 'Admin access required' });
+  }
+  next();
+};
+```
+
+2. **Movies Enhanced:**
+   - GET /movies/now-playing - Film yang sedang tayang
+   - GET /movies/coming-soon - Film yang akan tayang
+   - GET /movies/:id/showtimes - Jadwal tayang untuk film tertentu
+
+3. **Showtimes Enhanced:**
+   - GET /showtimes/by-movie/:movieId - Jadwal berdasarkan film
+   - GET /showtimes/by-date/:date - Jadwal berdasarkan tanggal
+   - GET /showtimes/:id/available-seats - Kursi yang tersedia
+
+4. **Seats Enhanced:**
+   - GET /seats/by-studio/:studioId - Kursi berdasarkan studio
+   - GET /seats/available/:showtimeId - Kursi tersedia untuk showtime
+   - POST /seats/bulk-create - Buat banyak kursi sekaligus
+
+5. **Bookings Enhanced:**
+   - GET /bookings/user/:userId - Booking berdasarkan user
+   - POST /bookings/create-with-seats - Buat booking beserta kursi
+   - PATCH /bookings/:id/cancel - Cancel booking
+   - GET /bookings/:id/tickets - Generate tiket
+
+6. **Dashboard Stats:**
+   - GET /stats/admin - Statistik untuk admin
+   - GET /stats/revenue - Revenue statistics
+
+### C. Middleware yang Perlu Ditambahkan (SIMPLIFIED):
+1. **Simple Role Check Middleware** - Check role from request body/headers (no JWT)
+2. **Basic Validation Middleware** - Validate essential input only
+3. **Error Handler Middleware** - Handle error secara global
+4. **CORS Middleware** - Allow frontend access to API
+
+### D. Fitur Tambahan (ESSENTIAL ONLY):
+1. **Simple Authentication** - Basic username/password check (no JWT)
+2. **localStorage Role Management** - Store user role in browser
+3. **Booking Code Generator** - Generate unique booking code
+4. **Seat Availability Check** - Cek kursi tersedia saat booking
+5. **Auto Seat Generation** - Generate kursi otomatis saat buat studio
+
+**NOTE**: Untuk UAS, kita skip kompleksitas seperti password hashing (bcrypt) dan JWT. Focus pada JavaScript + API + Database integration.
+
+## 7. TEKNOLOGI & LIBRARY YANG DIREKOMENDASIKAN
+-----------------------------------------------
+
+### Backend (ESSENTIAL ONLY):
+- dotenv - Environment variables ✓ (sudah ada)
+- cors - Enable cross-origin requests
+- express-validator (optional) - Basic input validation
+
+**SKIPPED untuk UAS:**
+- bcryptjs (password hashing complexity not needed)
+- jsonwebtoken (JWT complexity not needed)
+- multer (file upload not essential)
+- nodemailer (email not essential)
+
+### Frontend:
+- React Router DOM ✓ (sudah ada)
+- Axios ✓ (sudah ada)
+- Bulma CSS ✓ (sudah ada)
+- React Context/Redux - State management
+- React Hook Form - Form handling
+- React Hot Toast - Notifications
+- Moment.js atau Date-fns - Date handling
+
+## 8. PRIORITAS PENGEMBANGAN
+----------------------------
+
+### Phase 1 (Core Features):
+1. Setup authentication (JWT)
+2. Buat halaman login/register
+3. Buat movie list dan detail pages
+4. Implementasi basic booking flow
+
+### Phase 2 (User Features):
+1. Seat selection dengan visual
+2. Booking confirmation dan success
+3. User profile dan booking history
+4. Enhanced movie browsing
+
+### Phase 3 (Admin Features):
+1. Admin dashboard
+2. Movie management
+3. Showtime management
+4. Booking management
+
+### Phase 4 (Enhancement):
+1. Advanced filtering dan search
+2. Email notifications
+3. Payment integration (optional)
+4. Mobile responsiveness
+
+## 9. STRUKTUR FOLDER FRONTEND YANG DIREKOMENDASIKAN
+---------------------------------------------------
+
+### Lokasi: `d:\Development\Proyek\UAS\Pemweb Lanjut\my-frontend-tiketgercep\src\`
+
+```
+my-frontend-tiketgercep/
+└── src/
+    ├── components/
+    │   ├── common/
+    │   │   ├── Navbar.jsx
+    │   │   ├── Footer.jsx
+    │   │   ├── Loading.jsx
+    │   │   ├── ErrorMessage.jsx
+    │   │   └── ProtectedRoute.jsx
+    │   ├── movie/
+    │   │   ├── MovieCard.jsx
+    │   │   ├── MovieList.jsx
+    │   │   ├── MovieDetail.jsx
+    │   │   ├── MovieFilter.jsx
+    │   │   └── MovieSearch.jsx
+    │   ├── booking/
+    │   │   ├── SeatMap.jsx
+    │   │   ├── SeatSelector.jsx
+    │   │   ├── BookingForm.jsx
+    │   │   ├── BookingCard.jsx
+    │   │   ├── ShowtimeSelector.jsx
+    │   │   └── BookingConfirmation.jsx
+    │   ├── user/
+    │   │   ├── UserProfile.jsx
+    │   │   ├── BookingHistory.jsx
+    │   │   └── UserDashboard.jsx
+    │   └── admin/
+    │       ├── AdminSidebar.jsx
+    │       ├── AdminNavbar.jsx
+    │       ├── DataTable.jsx
+    │       ├── StatCard.jsx
+    │       ├── MovieForm.jsx
+    │       ├── StudioForm.jsx
+    │       └── ShowtimeForm.jsx
+    ├── pages/
+    │   ├── public/
+    │   │   ├── HomePage.jsx
+    │   │   ├── MovieListPage.jsx
+    │   │   ├── MovieDetailPage.jsx
+    │   │   ├── LoginPage.jsx
+    │   │   ├── RegisterPage.jsx
+    │   │   └── NotFoundPage.jsx
+    │   ├── user/
+    │   │   ├── UserDashboardPage.jsx
+    │   │   ├── BookingFlowPage.jsx
+    │   │   ├── SeatSelectionPage.jsx
+    │   │   ├── BookingConfirmPage.jsx
+    │   │   ├── BookingSuccessPage.jsx
+    │   │   ├── UserProfilePage.jsx
+    │   │   └── BookingHistoryPage.jsx
+    │   └── admin/
+    │       ├── AdminDashboardPage.jsx
+    │       ├── AdminMoviePage.jsx
+    │       ├── AdminStudioPage.jsx
+    │       ├── AdminShowtimePage.jsx
+    │       ├── AdminBookingPage.jsx
+    │       └── AdminUserPage.jsx
+    ├── hooks/
+    │   ├── useAuth.js
+    │   ├── useApi.js
+    │   ├── useLocalStorage.js
+    │   ├── useMovies.js
+    │   ├── useBooking.js
+    │   └── useForm.js
+    ├── services/
+    │   ├── api.js
+    │   ├── authService.js
+    │   ├── movieService.js
+    │   ├── bookingService.js
+    │   ├── userService.js
+    │   └── adminService.js
+    ├── utils/
+    │   ├── constants.js
+    │   ├── helpers.js
+    │   ├── validators.js
+    │   ├── dateUtils.js
+    │   ├── formatters.js
+    │   └── storage.js
+    ├── context/
+    │   ├── AuthContext.jsx
+    │   ├── BookingContext.jsx
+    │   └── NotificationContext.jsx
+    ├── styles/
+    │   ├── globals.css
+    │   ├── components.css
+    │   ├── pages.css
+    │   └── admin.css
+    └── assets/
+        ├── images/
+        │   ├── logo.png
+        │   ├── placeholder-movie.jpg
+        │   └── hero-bg.jpg
+        └── icons/
+            ├── seat-available.svg
+            ├── seat-selected.svg
+            └── seat-booked.svg
+```
+
+## 10. DETAIL FILE YANG HARUS DIBUAT DENGAN LOKASI LENGKAP
+----------------------------------------------------------
+
+### A. BACKEND FILES (Lokasi: `d:\Development\Proyek\UAS\Pemweb Lanjut\my-Backend-TiketGercep\`)
+
+#### 1. Model yang Sudah Ada ✅:
+```
+models/
+├── User.js ✅        - Sudah ada
+├── Movie.js ✅       - Sudah ada  
+├── Studio.js ✅      - Sudah ada
+├── Seat.js ✅        - Sudah ada
+├── Showtime.js ✅    - Sudah ada
+├── Booking.js ✅     - Sudah ada
+└── BookingSeat.js    - PERLU DIBUAT (Junction table)
+```
+
+#### 2. Controllers yang Sudah Ada ✅:
+```
+controllers/
+├── userControllers.js ✅     - Sudah ada
+├── movieControllers.js ✅    - Sudah ada
+├── studioControllers.js ✅   - Sudah ada
+├── seatControllers.js ✅     - Sudah ada
+├── showtimeControllers.js ✅ - Sudah ada
+├── bookingControllers.js ✅  - Sudah ada
+├── authControllers.js        - PERLU DIBUAT
+├── enhancedMovieControllers.js - PERLU DIBUAT
+└── statsControllers.js       - PERLU DIBUAT
+```
+
+#### 3. Routes yang Sudah Ada ✅:
+```
+routes/
+├── userRoute.js ✅      - Sudah ada
+├── movieRoute.js ✅     - Sudah ada
+├── studioRoute.js ✅    - Sudah ada
+├── seatRoute.js ✅      - Sudah ada
+├── showtimeRoute.js ✅  - Sudah ada
+├── bookingRoute.js ✅   - Sudah ada
+├── authRoute.js         - PERLU DIBUAT
+└── statsRoute.js        - PERLU DIBUAT
+```
+
+#### 4. Dependencies yang Sudah Ada ✅:
+```
+package.json dependencies:
+├── express ✅           - v5.1.0
+├── cors ✅              - v2.8.5
+├── sequelize ✅         - v6.37.7
+├── mysql2 ✅            - v3.14.1
+├── bcryptjs             - PERLU INSTALL
+├── jsonwebtoken         - PERLU INSTALL
+├── joi                  - PERLU INSTALL
+└── dotenv               - PERLU INSTALL
+```
+
+#### 5. File/Folder yang PERLU DIBUAT:
+
+#### 5. File/Folder yang PERLU DIBUAT:
+```
+middleware/               - FOLDER BARU
+├── authMiddleware.js      - Verifikasi JWT token
+├── adminMiddleware.js     - Cek role admin
+├── validateMiddleware.js  - Validasi input request
+└── errorMiddleware.js     - Global error handler
+
+utils/                    - FOLDER BARU
+├── generateBookingCode.js - Generate unique booking code
+├── seatGenerator.js      - Auto generate seats for studio
+├── jwtUtils.js          - JWT token utilities
+└── passwordUtils.js     - Password hashing utilities
+
+.env                     - Environment variables file
+```
+
+#### 6. Package.json Script yang Perlu Ditambah:
+```json
+"scripts": {
+  "start": "node index.js",
+  "dev": "nodemon index.js",
+  "test": "echo \"Error: no test specified\" && exit 1"
+}
+```
+
+### B. FRONTEND FILES (Lokasi: `d:\Development\Proyek\UAS\Pemweb Lanjut\my-frontend-tiketgercep\src\`)
+
+#### 1. Layout Components (`components/common/`):
+```
+Navbar.jsx           - Main navigation bar
+Footer.jsx           - Footer component
+Loading.jsx          - Loading spinner component
+ErrorMessage.jsx     - Error display component
+ProtectedRoute.jsx   - Route protection for authenticated users
+```
+
+#### 2. Movie Components (`components/movie/`):
+```
+MovieCard.jsx        - Individual movie card display
+MovieList.jsx        - List of movies grid/list
+MovieDetail.jsx      - Detailed movie information
+MovieFilter.jsx      - Filter movies by genre, rating
+MovieSearch.jsx      - Search movies functionality
+```
+
+#### 3. Booking Components (`components/booking/`):
+```
+SeatMap.jsx          - Visual seat map display
+SeatSelector.jsx     - Individual seat selection
+BookingForm.jsx      - Booking form inputs
+BookingCard.jsx      - Booking information card
+ShowtimeSelector.jsx - Select date, time, studio
+BookingConfirmation.jsx - Final booking confirmation
+```
+
+#### 4. User Components (`components/user/`):
+```
+UserProfile.jsx      - User profile information
+BookingHistory.jsx   - User's booking history
+UserDashboard.jsx    - User dashboard content
+```
+
+#### 5. Admin Components (`components/admin/`):
+```
+AdminSidebar.jsx     - Admin panel sidebar
+AdminNavbar.jsx      - Admin navigation
+DataTable.jsx        - Reusable data table
+StatCard.jsx         - Statistics card display
+MovieForm.jsx        - Add/edit movie form
+StudioForm.jsx       - Add/edit studio form
+ShowtimeForm.jsx     - Add/edit showtime form
+```
+
+#### 6. Public Pages (`pages/public/`):
+```
+HomePage.jsx         - Landing page
+MovieListPage.jsx    - Movies listing page
+MovieDetailPage.jsx  - Individual movie details
+LoginPage.jsx        - User login page
+RegisterPage.jsx     - User registration page
+NotFoundPage.jsx     - 404 error page
+```
+
+#### 7. User Pages (`pages/user/`):
+```
+UserDashboardPage.jsx - User dashboard
+BookingFlowPage.jsx   - Complete booking flow
+SeatSelectionPage.jsx - Seat selection interface
+BookingConfirmPage.jsx - Booking confirmation
+BookingSuccessPage.jsx - Booking success message
+UserProfilePage.jsx   - User profile management
+BookingHistoryPage.jsx - User booking history
+```
+
+#### 8. Admin Pages (`pages/admin/`):
+```
+AdminDashboardPage.jsx - Admin dashboard with stats
+AdminMoviePage.jsx     - Manage movies
+AdminStudioPage.jsx    - Manage studios
+AdminShowtimePage.jsx  - Manage showtimes
+AdminBookingPage.jsx   - Manage all bookings
+AdminUserPage.jsx      - Manage users
+```
+
+#### 9. Custom Hooks (`hooks/`):
+```
+useAuth.js           - Authentication state management
+useApi.js            - API calls management
+useLocalStorage.js   - Local storage operations
+useMovies.js         - Movies data management
+useBooking.js        - Booking state management
+useForm.js           - Form handling utilities
+```
+
+#### 10. Services (`services/`):
+```
+api.js               - Base API configuration (Axios)
+authService.js       - Authentication API calls
+movieService.js      - Movie-related API calls
+bookingService.js    - Booking-related API calls
+userService.js       - User-related API calls
+adminService.js      - Admin-specific API calls
+```
+
+#### 11. Utilities (`utils/`):
+```
+constants.js         - Application constants
+helpers.js           - Helper functions
+validators.js        - Form validation functions
+dateUtils.js         - Date formatting utilities
+formatters.js        - Data formatting functions
+storage.js           - Local storage utilities
+```
+
+#### 12. Context (`context/`):
+```
+AuthContext.jsx      - User authentication context
+BookingContext.jsx   - Booking state context
+NotificationContext.jsx - Notification system context
+```
+
+#### 13. Styles (`styles/`):
+```
+globals.css          - Global styles
+components.css       - Component-specific styles
+pages.css           - Page-specific styles
+admin.css           - Admin panel styles
+```
+
+#### 14. Assets (`assets/`):
+```
+images/
+├── logo.png         - Application logo
+├── placeholder-movie.jpg - Default movie poster
+└── hero-bg.jpg      - Homepage hero background
+
+icons/
+├── seat-available.svg - Available seat icon
+├── seat-selected.svg  - Selected seat icon
+└── seat-booked.svg    - Booked seat icon
+```
+
+### C. Configuration Files:
+```
+my-frontend-tiketgercep/
+├── .env.development     - Development environment variables
+├── .env.production      - Production environment variables
+└── src/config/
+    └── apiConfig.js     - API configuration settings
+
+my-Backend-TiketGercep/
+├── .env                 - Environment variables (DB, JWT secret)
+└── config/
+    ├── Database.js ✓    - Database configuration (sudah ada)
+    └── jwtConfig.js     - JWT configuration
+```
+
+## 11. SAMPLE DATA UNTUK TESTING
+--------------------------------
+
+### Movies:
+- Spider-Man: No Way Home (Action, PG-13)
+- The Batman (Action, PG-13)
+- Dune (Sci-Fi, PG-13)
+- No Time to Die (Action, PG-13)
+
+### Studios:
+- Studio A (50 seats, 5 rows, 10 seats per row)
+- Studio B (40 seats, 4 rows, 10 seats per row)
+- Studio C (60 seats, 6 rows, 10 seats per row)
+
+### Showtimes:
+- Multiple times per day (10:00, 13:00, 16:00, 19:00, 22:00)
+- Different prices for different times
+- Weekend surcharge
+
+## 12. PANDUAN IMPLEMENTASI STEP-BY-STEP
+----------------------------------------
+
+### LANGKAH 1: Setup Backend Enhancement
+1. Install dependencies tambahan yang BELUM ADA:
+   ```bash
+   cd "d:\Development\Proyek\UAS\Pemweb Lanjut\my-Backend-TiketGercep"
+   npm install bcryptjs jsonwebtoken joi dotenv nodemon
+   ```
+
+2. Update package.json scripts:
+   ```bash
+   # Edit package.json dan tambahkan scripts:
+   # "start": "node index.js",
+   # "dev": "nodemon index.js"
+   ```
+
+3. Buat file environment:
+   ```
+   File: .env
+   Lokasi: d:\Development\Proyek\UAS\Pemweb Lanjut\my-Backend-TiketGercep\.env
+   Isi:
+   DB_HOST=localhost
+   DB_USER=root
+   DB_PASS=
+   DB_NAME=db_tiketgercep
+   JWT_SECRET=your_jwt_secret_here
+   PORT=5000
+   ```
+
+4. Buat folder dan file yang BELUM ADA:
+   ```bash
+   # Buat folder middleware
+   mkdir middleware
+   
+   # Buat folder utils  
+   mkdir utils
+   ```
+
+5. Buat model BookingSeat (BELUM ADA):
+   ```
+   File: BookingSeat.js
+   Lokasi: d:\Development\Proyek\UAS\Pemweb Lanjut\my-Backend-TiketGercep\models\BookingSeat.js
+   ```
+
+### LANGKAH 2: Setup Frontend Structure
+1. Install dependencies tambahan:
+   ```bash
+   cd "d:\Development\Proyek\UAS\Pemweb Lanjut\my-frontend-tiketgercep"
+   npm install react-hook-form react-hot-toast date-fns
+   ```
+
+2. Buat struktur folder:
+   ```bash
+   # Buat folder-folder utama
+   mkdir src\components src\pages src\hooks src\services src\utils src\context src\styles src\assets
+   
+   # Buat subfolder components
+   mkdir src\components\common src\components\movie src\components\booking src\components\user src\components\admin
+   
+   # Buat subfolder pages
+   mkdir src\pages\public src\pages\user src\pages\admin
+   
+   # Buat subfolder assets
+   mkdir src\assets\images src\assets\icons
+   ```
+
+3. Buat file konfigurasi:
+   ```
+   File: .env.development
+   Lokasi: d:\Development\Proyek\UAS\Pemweb Lanjut\my-frontend-tiketgercep\.env.development
+   
+   File: apiConfig.js
+   Lokasi: d:\Development\Proyek\UAS\Pemweb Lanjut\my-frontend-tiketgercep\src\config\apiConfig.js
+   ```
+
+### LANGKAH 3: Implementasi Phase 1 (Core Features)
+1. **Buat Simple localStorage Auth Context**:
+   ```
+   File: AuthContext.jsx
+   Lokasi: d:\Development\Proyek\UAS\Pemweb Lanjut\my-frontend-tiketgercep\src\context\AuthContext.jsx
+   Content: localStorage-based user management with role switching
+   ```
+
+2. **Buat API Service**:
+   ```
+   File: api.js
+   Lokasi: d:\Development\Proyek\UAS\Pemweb Lanjut\my-frontend-tiketgercep\src\services\api.js
+   ```
+
+3. **Buat Components Utama**:
+   ```
+   Files: Navbar.jsx, Footer.jsx
+   Lokasi: d:\Development\Proyek\UAS\Pemweb Lanjut\my-frontend-tiketgercep\src\components\common\
+   ```
+
+4. **Buat Pages Utama**:
+   ```
+   Files: HomePage.jsx, LoginPage.jsx, RegisterPage.jsx
+   Lokasi: d:\Development\Proyek\UAS\Pemweb Lanjut\my-frontend-tiketgercep\src\pages\public\
+   ```
+
+### LANGKAH 4: File yang Harus Dibuat Pertama (Prioritas Tinggi)
+
+#### Backend (urutan pembuatan - SIMPLIFIED):
+1. `.env` - Environment variables
+2. `middleware/simpleAuth.js` - Simple role checking (no JWT)
+3. `models/BookingSeat.js` - Junction table
+4. `controllers/authControllers.js` - Simple auth logic (no JWT)
+5. `routes/authRoute.js` - Auth endpoints
+
+**SIMPLIFIED: Tidak perlu buat JWT utilities dan password hashing untuk UAS**
+
+#### Frontend (urutan pembuatan - localStorage based):
+1. `.env.development` - Environment variables
+2. `src/config/apiConfig.js` - API configuration
+3. `src/services/api.js` - Base API setup
+4. `src/context/AuthContext.jsx` - localStorage-based auth context
+5. `src/utils/roleManager.js` - Role switching utilities
+6. `src/components/common/Navbar.jsx` - Navigation with role toggle
+7. `src/components/common/Footer.jsx` - Footer
+8. `src/pages/public/HomePage.jsx` - Landing page
+9. `src/pages/public/LoginPage.jsx` - Simple login
+10. `src/pages/public/RegisterPage.jsx` - Simple register
+11. `src/App.js` - Update routing
+
+### AUTHENTICATION CODE EXAMPLES FOR REFERENCE:
+
+#### localStorage Role Manager (src/utils/roleManager.js):
+```javascript
+export const roleManager = {
+  // Store user in localStorage
+  setUser: (userData) => {
+    localStorage.setItem('tiketgercep_user', JSON.stringify(userData));
+  },
+  
+  // Get current user
+  getUser: () => {
+    const user = localStorage.getItem('tiketgercep_user');
+    return user ? JSON.parse(user) : null;
+  },
+  
+  // Check if admin
+  isAdmin: () => {
+    const user = roleManager.getUser();
+    return user && user.role === 'admin';
+  },
+  
+  // Toggle role for demo
+  toggleRole: () => {
+    const user = roleManager.getUser();
+    if (user) {
+      user.role = user.role === 'admin' ? 'user' : 'admin';
+      roleManager.setUser(user);
+      return user.role;
+    }
+    return null;
+  },
+  
+  // Clear user data
+  clearUser: () => {
+    localStorage.removeItem('tiketgercep_user');
+  }
+};
+```
+
+Ini adalah dokumentasi lengkap untuk pengembangan aplikasi TiketGercep. Mulai dengan LANGKAH 1 dan implementasikan secara bertahap sesuai prioritas yang telah ditentukan.

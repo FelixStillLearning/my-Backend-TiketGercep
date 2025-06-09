@@ -1,0 +1,255 @@
+# TIKET GERCEP - FILE WAJIB UAS CHECKLIST
+==========================================
+
+## 📊 OVERVIEW STATUS
+--------------------
+- ✅ **SUDAH ADA**: 26 files (Backend: 14, Frontend: 8, Docs: 4)
+- ❌ **WAJIB DIBUAT**: 24 files untuk UAS (Backend: 5, Frontend: 19)
+- 📁 **FOLDER**: 100% sudah dibuat
+- 🎯 **FOCUS**: Core functionality yang dibutuhkan untuk UAS
+
+## 🚀 BACKEND STATUS (my-Backend-TiketGercep/)
+----------------------------------------------
+
+### ✅ SUDAH ADA (14 files):
+```
+📄 index.js                         ✅ Entry point server
+📄 package.json                     ✅ Dependencies
+📄 request.rest                     ✅ API testing
+📁 config/
+  └── Database.js                   ✅ MySQL connection
+📁 models/ (6 files)
+  ├── User.js                       ✅ User model
+  ├── Movie.js                      ✅ Movie model  
+  ├── Studio.js                     ✅ Studio model
+  ├── Seat.js                       ✅ Seat model
+  ├── Showtime.js                   ✅ Showtime model
+  └── Booking.js                    ✅ Booking model
+📁 controllers/ (6 files)
+  ├── userControllers.js            ✅ User CRUD
+  ├── movieControllers.js           ✅ Movie CRUD
+  ├── studioControllers.js          ✅ Studio CRUD
+  ├── seatControllers.js            ✅ Seat CRUD
+  ├── showtimeControllers.js        ✅ Showtime CRUD
+  └── bookingControllers.js         ✅ Booking CRUD
+📁 routes/ (6 files)
+  ├── userRoute.js                  ✅ User endpoints
+  ├── movieRoute.js                 ✅ Movie endpoints
+  ├── studioRoute.js                ✅ Studio endpoints
+  ├── seatRoute.js                  ✅ Seat endpoints
+  ├── showtimeRoute.js              ✅ Showtime endpoints
+  └── bookingRoute.js               ✅ Booking endpoints
+```
+
+### ❌ WAJIB DIBUAT UNTUK UAS (5 files - SIMPLIFIED APPROACH):
+
+#### Setup Backend Foundation:
+```
+📄 .env                             ❌ Environment variables (DATABASE CONFIG)
+📄 config/cors.js                   ❌ CORS configuration (FRONTEND CONNECTION)
+📄 config/server.js                 ❌ Server configuration (EXPRESS SETUP)
+📄 models/index.js                  ❌ Model associations (DATABASE RELATIONS)
+📄 controllers/authControllers.js   ❌ Simple auth (localStorage-based, NO JWT)
+```
+
+**SIMPLIFIED UAS APPROACH:**
+- NO JWT authentication complexity
+- NO bcrypt password hashing
+- NO complex middleware
+- FOCUS: localStorage role management + basic API
+📄 routes/index.js                  ❌ Route aggregator (API ENDPOINTS)
+```
+
+**KENAPA WAJIB?**
+- .env → Database connection string
+- cors.js → Frontend bisa akses backend
+- server.js → Express server config
+- models/index.js → Relasi antar tabel database
+- routes/index.js → Gabungin semua API endpoints
+
+## 🎨 FRONTEND STATUS (my-frontend-tiketgercep/)
+-----------------------------------------------
+
+### ✅ SUDAH ADA (8 files):
+```
+📄 package.json                     ✅ Dependencies
+📄 README.md                        ✅ Frontend docs
+📁 public/ (6 files)
+  ├── index.html                    ✅ HTML template
+  ├── favicon.ico                   ✅ Icon
+  ├── manifest.json                 ✅ PWA manifest
+  ├── robots.txt                    ✅ SEO
+  ├── logo192.png                   ✅ Logo
+  └── logo512.png                   ✅ Logo
+📁 src/
+  ├── index.js                      ✅ React entry
+  └── App.js                        ✅ Main component
+```
+
+### ❌ WAJIB DIBUAT UNTUK UAS (19 files):
+
+#### Setup Frontend Foundation (5 files):
+```
+📄 .env                             ❌ Environment vars (API URL CONFIG)
+📄 App.css                          ❌ App styling (BULMA + CUSTOM CSS)
+📄 services/api.js                  ❌ Axios config (API CONNECTION)
+📄 services/movieService.js         ❌ Movie API calls (CRUD OPERATIONS)
+📄 services/studioService.js        ❌ Studio API calls (CRUD OPERATIONS)
+```
+
+#### Common Components (3 files):
+```
+📄 components/common/Header.jsx     ❌ App navigation (MENU)
+📄 components/common/Loading.jsx    ❌ Loading spinner (UX)
+📄 components/common/Modal.jsx      ❌ Modal dialogs (FORMS)
+```
+
+#### Admin Features - CRUD (7 files):
+```
+📄 components/admin/AdminNavigation.jsx  ❌ Admin menu (SIDEBAR)
+📄 components/admin/DataTable.jsx        ❌ Data table (LIST VIEW)
+📄 components/admin/MovieForm.jsx        ❌ Movie form (CREATE/EDIT)
+📄 pages/admin/AdminDashboard.jsx        ❌ Admin home (DASHBOARD)
+📄 pages/admin/MovieManager.jsx          ❌ Movie CRUD page (ADMIN MOVIES)
+📄 pages/admin/StudioManager.jsx         ❌ Studio CRUD page (ADMIN STUDIOS)
+📄 pages/admin/ShowtimeManager.jsx       ❌ Showtime CRUD page (ADMIN JADWAL)
+```
+
+#### User Features - Booking (4 files):
+```
+📄 components/user/MovieCard.jsx     ❌ Movie card (DISPLAY)
+📄 pages/user/UserDashboard.jsx      ❌ User home (MAIN PAGE)
+📄 pages/user/MovieList.jsx          ❌ Browse movies (USER VIEW)
+📄 pages/user/BookingPage.jsx        ❌ Booking process (TICKET BOOKING)
+```
+
+**KENAPA WAJIB?**
+- Setup Foundation → Frontend bisa connect backend
+- Common Components → Reusable UI elements
+- Admin Features → Admin bisa CRUD semua data
+- User Features → User bisa lihat film dan booking tiket
+
+## 📚 DOCUMENTATION STATUS (docs/)
+----------------------------------
+
+### ✅ SUDAH ADA (4 files):
+```
+📄 TiketGercep_UAS_Simple_Guide.txt         ✅ Main UAS guide
+📄 TiketGercep_Flow_Documentation.txt       ✅ Complete docs
+📄 TiketGercep_Folder_Structure.txt         ✅ Folder guide
+📄 TiketGercep_File_Status_Checklist.txt    ✅ This file
+```
+
+## 📚 DOCUMENTATION STATUS (docs/)
+----------------------------------
+
+### ✅ SUDAH ADA (4 files):
+```
+📄 TiketGercep_UAS_Simple_Guide.txt         ✅ Main UAS guide
+📄 TiketGercep_Flow_Documentation.txt       ✅ Complete docs
+📄 TiketGercep_Folder_Structure.txt         ✅ Folder guide
+📄 TiketGercep_File_Status_Checklist.txt    ✅ This file
+```
+
+### DOKUMENTASI SUDAH CUKUP UNTUK UAS! ✅
+**Tidak perlu buat dokumentasi tambahan untuk nilai UAS.**
+
+## 🎯 URUTAN PENGERJAAN YANG BENAR
+==================================
+
+### STEP 1: SETUP BACKEND (5 files)
+**Target**: Backend API bisa diakses dari frontend
+
+1. **📄 .env** - Database connection
+2. **📄 config/cors.js** - Allow frontend access
+3. **📄 config/server.js** - Express configuration
+4. **📄 models/index.js** - Database relationships
+5. **📄 routes/index.js** - API endpoints ready
+
+**✅ TEST**: Backend API bisa ditest dengan Postman/REST Client
+
+### STEP 2: SETUP FRONTEND CONNECTION (5 files)
+**Target**: Frontend bisa connect ke backend
+
+6. **📄 .env** - Backend API URL
+7. **📄 App.css** - Basic Bulma styling
+8. **📄 services/api.js** - Axios setup
+9. **📄 services/movieService.js** - Movie API calls
+10. **📄 services/studioService.js** - Studio API calls
+
+**✅ TEST**: Frontend bisa fetch data dari backend
+
+### STEP 3: BASIC UI COMPONENTS (3 files)
+**Target**: Basic UI elements ready
+
+11. **📄 components/common/Header.jsx** - Navigation
+12. **📄 components/common/Loading.jsx** - Loading state
+13. **📄 components/common/Modal.jsx** - Form dialogs
+
+**✅ TEST**: Components render tanpa error
+
+### STEP 4: ADMIN FEATURES (7 files)
+**Target**: Admin bisa CRUD movies, studios, showtimes
+
+14. **📄 components/admin/AdminNavigation.jsx** - Admin menu
+15. **📄 components/admin/DataTable.jsx** - Display data
+16. **📄 components/admin/MovieForm.jsx** - Movie create/edit
+17. **📄 pages/admin/AdminDashboard.jsx** - Admin home
+18. **📄 pages/admin/MovieManager.jsx** - Movie CRUD
+19. **📄 pages/admin/StudioManager.jsx** - Studio CRUD
+20. **📄 pages/admin/ShowtimeManager.jsx** - Showtime CRUD
+
+**✅ TEST**: Admin bisa create, read, update, delete semua data
+
+### STEP 5: USER FEATURES (4 files)
+**Target**: User bisa lihat movies dan booking
+
+21. **📄 components/user/MovieCard.jsx** - Display movie
+22. **📄 pages/user/UserDashboard.jsx** - User main page
+23. **📄 pages/user/MovieList.jsx** - Browse movies
+24. **📄 pages/user/BookingPage.jsx** - Simple booking
+
+**✅ TEST**: User bisa booking tiket
+
+## 🏆 SUCCESS CRITERIA UAS
+==========================
+
+### ✅ BACKEND REQUIREMENTS:
+- [x] Models sudah ada (6 models) ✅
+- [x] Controllers sudah ada (6 controllers) ✅
+- [x] Routes sudah ada (6 routes) ✅
+- [ ] API bisa diakses dari frontend (perlu 5 files setup)
+- [ ] Database relationships working (perlu models/index.js)
+
+### ✅ FRONTEND REQUIREMENTS:
+- [ ] Bisa connect ke backend API (perlu services setup)
+- [ ] Admin bisa CRUD semua data (perlu admin components)
+- [ ] User bisa browse movies (perlu user components)
+- [ ] User bisa booking tiket (perlu booking flow)
+- [ ] UI menggunakan Bulma CSS (perlu App.css)
+
+### ✅ INTEGRATION REQUIREMENTS:
+- [ ] Data flow frontend ↔ backend ↔ database
+- [ ] CRUD operations working
+- [ ] Booking system functional
+- [ ] No critical errors
+
+## 🚀 MULAI DARI MANA?
+=====================
+
+**START HERE: Backend Setup File #1**
+👉 **Buat file `.env` di folder my-Backend-TiketGercep/**
+
+```bash
+cd "d:\Development\Proyek\UAS\Pemweb Lanjut\my-Backend-TiketGercep"
+```
+
+**TOTAL FILES TO CREATE: 24 files**
+- Backend: 5 files (setup foundation)
+- Frontend: 19 files (UI + API integration)
+
+**ESTIMATED TIME: 3-4 hari development**
+- Day 1: Backend setup (file 1-5)
+- Day 2: Frontend connection (file 6-13) 
+- Day 3: Admin features (file 14-20)
+- Day 4: User features + testing (file 21-24)
