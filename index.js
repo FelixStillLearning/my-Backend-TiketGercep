@@ -1,8 +1,11 @@
 import express from "express";
 import cors from "cors";
 import db from "./config/Database.js";
+// Import models with associations
+import "./models/index.js";
 import userRoute from "./routes/userRoute.js";
 import bookingRoute from "./routes/bookingRoute.js";
+import bookingSeatRoute from "./routes/bookingSeatRoute.js";
 import showtimeRoute from "./routes/showtimeRoute.js";
 import movieRoute from "./routes/movieRoute.js";
 import studioRoute from "./routes/studioRoute.js";
@@ -11,12 +14,13 @@ import seatRoute from "./routes/seatRoute.js";
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(userRoute);
-app.use(bookingRoute);
-app.use(showtimeRoute);
-app.use(movieRoute);
-app.use(studioRoute);
-app.use(seatRoute);
+app.use('/api', userRoute);
+app.use('/api', bookingRoute);
+app.use('/api', bookingSeatRoute);
+app.use('/api', showtimeRoute);
+app.use('/api', movieRoute);
+app.use('/api', studioRoute);
+app.use('/api', seatRoute);
 
 // Sync database
 (async() => {

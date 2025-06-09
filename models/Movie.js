@@ -24,9 +24,8 @@ const Movie = db.define("Movie", {
   genre: {
     type: DataTypes.STRING(100),
     allowNull: false,
-  },
-  rating: {
-    type: DataTypes.ENUM("G", "PG-13", "R", "NC-17"),
+  },  rating: {
+    type: DataTypes.ENUM("G", "PG", "PG-13", "R", "NC-17"),
     allowNull: false,
   },
   poster_url: {
