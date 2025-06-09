@@ -45,7 +45,7 @@ DELETE http://localhost:5000/api/users/1
 ### Get All Movies
 GET http://localhost:5000/api/movies
 
-### Create Movie
+### Create Movie 1
 POST http://localhost:5000/api/movies/
 Content-Type: application/json
 
@@ -58,6 +58,81 @@ Content-Type: application/json
     "release_date":"2022-12-16",
     "status":"ended",
     "poster_url":"https://example.com/avatar2-poster.jpg"
+}
+
+### Create Movie 2
+POST http://localhost:5000/api/movies/
+Content-Type: application/json
+
+{
+    "title": "Oppenheimer",
+    "genre": "Biography, Drama, History",
+    "duration": "180",
+    "rating": "R",
+    "synopsis": "The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb.",
+    "release_date": "2023-07-21",
+    "status": "now_playing",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTYyMjQ2NjY4OF5BMl5BanBnXkFtZTgwOTY1MzE0MDE@._V1_SX300.jpg"
+}
+
+### Create Movie 3
+POST http://localhost:5000/api/movies/
+Content-Type: application/json
+
+{
+    "title": "Mission: Impossible - Dead Reckoning Part Two",
+    "genre": "Action, Adventure, Thriller",
+    "duration": "155",
+    "rating": "PG-13",
+    "synopsis": "Ethan Hunt and his IMF team must track down a terrifying new weapon that threatens all of humanity before it falls into the wrong hands. The most dangerous mission they have ever faced begins.",
+    "release_date": "2025-05-23",
+    "status": "now_playing",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BYmQ0YmY0OTItYTMyMy00YTljLTg5YjYtYjI3MDBhYTE1ZDM1XkEyXkFqcGdeQXVyMTEyMDY2NDYy._V1_SX300.jpg"
+}
+
+### Create Movie 4
+POST http://localhost:5000/api/movies/
+Content-Type: application/json
+
+{
+    "title": "Lilo & Stitch",
+    "genre": "Adventure, Comedy, Family, Sci-Fi",
+    "duration": "106",
+    "rating": "PG",
+    "synopsis": "A live-action retelling of the beloved 2002 animated film. A lonely girl named Lilo, living in Hawaii, befriends a creature she believes to be a dog. She names him Stitch, completely unaware that he is a dangerous genetic experiment who has escaped from an alien planet and crash-landed on Earth.",
+    "release_date": "2025-05-23",
+    "status": "now_playing",
+    "poster_url": "http://www.impawards.com/2025/posters/lilo_and_stitch.jpg"
+}
+
+### Create Movie 5
+POST http://localhost:5000/api/movies/
+Content-Type: application/json
+
+{
+    "title": "The Fantastic Four",
+    "genre": "Action, Adventure, Sci-Fi",
+    "duration": "145",
+    "rating": "PG-13",
+    "synopsis": "Four astronauts gain superpowers after being exposed to cosmic radiation. They must learn to use their new abilities to protect the world from an enemy who was once their friend.",
+    "release_date": "2025-07-25",
+    "status": "coming_soon",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BOWNkM2I4NGEtM2UzNi00MTI2LTk1ZmEtN2FmOGQ5MDQzYTk3XkEyXkFqcGdeQXVyMTEyMDY2NDYy._V1_SX300.jpg"
+}
+
+### Create Movie 6
+POST http://localhost:5000/api/movies/
+Content-Type: application/json
+
+{
+    "title": "Dune: Part Two",
+    "genre": "Adventure, Drama, Sci-Fi",
+    "duration": "155",
+    "rating": "PG-13",
+    "synopsis": "The epic conclusion of the Dune saga, where Paul Atreides unites with Chani and the Fremen while seeking revenge against those who destroyed his family.",
+    "release_date": "2024-11-15",
+    "status": "coming_soon",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTYyMjQ2NjY4OF5BMl5BanBnXkFtZTgwOTY1MzE0MDE@._V1_SX300.jpg"
 }
 
 ### Get Movie by ID
