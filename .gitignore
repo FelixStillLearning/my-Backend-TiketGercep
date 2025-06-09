@@ -1,0 +1,255 @@
+# ================================
+# TiketGercep Project .gitignore
+# ================================
+# Full-stack Node.js/Express + React app
+# Created for UAS Pemweb Lanjut project
+
+# ===============================
+# Node.js & NPM
+# ===============================
+# Dependency directories
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Package locks (keep if using specific package manager)
+# Uncomment the one you want to keep:
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# ===============================
+# Environment & Configuration
+# ===============================
+# Environment variables (IMPORTANT: Contains DB credentials!)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.staging
+
+# Database configuration files with credentials
+config/database.json
+config/config.json
+database.json
+
+# ===============================
+# Build & Distribution
+# ===============================
+# React build output
+build/
+dist/
+out/
+
+# Static files that are generated
+static/
+
+# ===============================
+# Development & IDE
+# ===============================
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# VS Code settings (optional - uncomment if you want to ignore)
+# .vscode/settings.json
+# .vscode/launch.json
+# .vscode/extensions.json
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# ===============================
+# Logs & Debug
+# ===============================
+# Log files
+logs/
+*.log
+log/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# ===============================
+# Cache & Temporary Files
+# ===============================
+# Dependency directories cache
+.npm
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# ESLint cache
+.eslintcache
+
+# Optional cache directories
+.cache/
+.parcel-cache/
+
+# Temporary folders
+tmp/
+temp/
+.tmp/
+
+# ===============================
+# Testing & Coverage
+# ===============================
+# Test coverage
+coverage/
+*.lcov
+.nyc_output
+
+# Jest
+.jest/
+
+# ===============================
+# Database & Backend Specific
+# ===============================
+# Database files (if using SQLite)
+*.db
+*.sqlite
+*.sqlite3
+
+# Database dumps and backups
+*.sql
+database/backups/
+dumps/
+
+# Upload directories
+uploads/
+files/
+public/uploads/
+
+# ===============================
+# OS Specific Files
+# ===============================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+*~
+.nfs*
+
+# ===============================
+# Security & Sensitive Data
+# ===============================
+# SSL certificates
+*.pem
+*.key
+*.crt
+*.csr
+
+# API keys and secrets
+secrets/
+.secrets
+api-keys.json
+
+# JWT secrets
+jwt-secret.*
+
+# ===============================
+# Documentation & Project Files
+# ===============================
+# Compiled documentation
+docs/_build/
+.docs/
+
+# Project specific temporary files
+.notes
+.todo
+scratch/
+
+# API documentation (if auto-generated)
+api-docs/
+
+# ===============================
+# Deployment & DevOps
+# ===============================
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Kubernetes
+k8s/secrets/
+
+# Serverless
+.serverless/
+
+# ===============================
+# Misc
+# ===============================
+# Backup files
+*.backup
+*.bak
+*.orig
+
+# Archive files (unless needed)
+*.tar
+*.tar.gz
+*.zip
+*.rar
+
+# Editor backup files
+*~
+*.tmp
+
+# ===============================
+# Project Specific
+# ===============================
+# TiketGercep specific ignores
+
+# Development database backups
+database/dev-backup/
+
+# Cinema assets (if large files)
+public/assets/posters/
+public/assets/trailers/
+
+# Customer data exports
+exports/
+reports/
+
+# Session files
+sessions/
+
+# Testing screenshots
+screenshots/
+test-results/
+
+# ===============================
+# IMPORTANT NOTES:
+# ===============================
+# 1. The .env file contains database credentials - NEVER commit this!
+# 2. node_modules can be recreated with npm install
+# 3. Build files can be regenerated
+# 4. Keep package.json and package-lock.json for reproducible builds
+# 5. Consider keeping .vscode/settings.json if you want to share editor settings with team

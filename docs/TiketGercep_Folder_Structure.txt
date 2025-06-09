@@ -1,0 +1,313 @@
+# TIKET GERCEP - FOLDER STRUCTURE GUIDE
+==========================================
+
+## STRUKTUR FOLDER LENGKAP
+--------------------------
+
+```
+📁 TiketGercep Project/
+├── 📄 TiketGercep_UAS_Simple_Guide.txt         # Dokumentasi utama UAS
+├── 📄 TiketGercep_Flow_Documentation.txt       # Dokumentasi lengkap
+├── 📄 TiketGercep_Folder_Structure.txt         # File ini (penjelasan folder)
+│
+├── 📁 my-Backend-TiketGercep/                  # BACKEND (Node.js + Express)
+│   ├── 📄 index.js                             # Entry point server
+│   ├── 📄 package.json                         # Dependencies & scripts
+│   ├── 📄 request.rest                         # API testing file
+│   ├── 📄 .env                                 # Environment variables (perlu dibuat)
+│   ├── 📄 README.md                            # Backend documentation (perlu dibuat)
+│   │
+│   ├── 📁 config/                              # KONFIGURASI
+│   │   ├── 📄 Database.js                      # ✅ Konfigurasi koneksi MySQL
+│   │   ├── 📄 cors.js                          # CORS configuration (perlu dibuat)
+│   │   └── 📄 server.js                        # Server configuration (perlu dibuat)
+│   │
+│   ├── 📁 models/                              # DATABASE MODELS (Sequelize)
+│   │   ├── 📄 User.js                          # ✅ Model User (admin/customer)
+│   │   ├── 📄 Movie.js                         # ✅ Model Movie (film)
+│   │   ├── 📄 Studio.js                        # ✅ Model Studio (ruang bioskop)
+│   │   ├── 📄 Seat.js                          # ✅ Model Seat (kursi)
+│   │   ├── 📄 Showtime.js                      # ✅ Model Showtime (jadwal tayang)
+│   │   ├── 📄 Booking.js                       # ✅ Model Booking (pemesanan)
+│   │   └── 📄 index.js                         # Model associations (perlu dibuat)
+│   │
+│   ├── 📁 controllers/                         # BUSINESS LOGIC
+│   │   ├── 📄 userControllers.js               # ✅ CRUD User operations
+│   │   ├── 📄 movieControllers.js              # ✅ CRUD Movie operations
+│   │   ├── 📄 studioControllers.js             # ✅ CRUD Studio operations
+│   │   ├── 📄 seatControllers.js               # ✅ CRUD Seat operations
+│   │   ├── 📄 showtimeControllers.js           # ✅ CRUD Showtime operations
+│   │   ├── 📄 bookingControllers.js            # ✅ CRUD Booking operations
+│   │   └── 📄 authControllers.js               # Simple auth logic (perlu dibuat)
+│   │
+│   ├── 📁 routes/                              # API ENDPOINTS
+│   │   ├── 📄 userRoute.js                     # ✅ /users endpoints
+│   │   ├── 📄 movieRoute.js                    # ✅ /movies endpoints
+│   │   ├── 📄 studioRoute.js                   # ✅ /studios endpoints
+│   │   ├── 📄 seatRoute.js                     # ✅ /seats endpoints
+│   │   ├── 📄 showtimeRoute.js                 # ✅ /showtimes endpoints
+│   │   ├── 📄 bookingRoute.js                  # ✅ /bookings endpoints
+│   │   ├── 📄 authRoute.js                     # /auth endpoints (perlu dibuat)
+│   │   └── 📄 index.js                         # Route aggregator (perlu dibuat)
+│   │
+│   ├── 📁 middleware/                          # MIDDLEWARE (perlu dibuat)
+│   │   ├── 📄 auth.js                          # Simple authentication check
+│   │   ├── 📄 validation.js                    # Input validation
+│   │   └── 📄 errorHandler.js                  # Error handling
+│   │
+│   ├── 📁 utils/                               # UTILITIES (perlu dibuat)
+│   │   ├── 📄 response.js                      # Standardized API responses
+│   │   ├── 📄 generateCode.js                  # Booking code generator
+│   │   └── 📄 dateHelper.js                    # Date formatting helpers
+│   │
+│   └── 📁 database/                            # DATABASE FILES (perlu dibuat)
+│       ├── 📄 seeders.js                       # Sample data insertion
+│       └── 📄 schema.sql                       # Database schema (backup)
+│
+├── 📁 my-frontend-tiketgercep/                 # FRONTEND (React.js)
+│   ├── 📄 package.json                         # ✅ Dependencies & scripts
+│   ├── 📄 README.md                            # ✅ Frontend documentation
+│   ├── 📄 .env                                 # Environment variables (perlu dibuat)
+│   │
+│   ├── 📁 public/                              # PUBLIC ASSETS
+│   │   ├── 📄 index.html                       # ✅ Main HTML template
+│   │   ├── 📄 favicon.ico                      # ✅ Browser icon
+│   │   ├── 📄 manifest.json                    # ✅ PWA manifest
+│   │   └── 📄 robots.txt                       # ✅ SEO robots
+│   │
+│   └── 📁 src/                                 # SOURCE CODE
+│       ├── 📄 index.js                         # ✅ Entry point React
+│       ├── 📄 App.js                           # ✅ Main App component
+│       ├── 📄 App.css                          # App styling (perlu dibuat)
+│       │
+│       ├── 📁 components/                      # REUSABLE COMPONENTS (perlu dibuat)
+│       │   ├── 📁 common/                      # Shared components
+│       │   │   ├── 📄 Header.jsx               # App header/navbar
+│       │   │   ├── 📄 Footer.jsx               # App footer
+│       │   │   ├── 📄 Loading.jsx              # Loading indicator
+│       │   │   ├── 📄 Modal.jsx                # Modal dialog
+│       │   │   └── 📄 Button.jsx               # Custom button
+│       │   │
+│       │   ├── 📁 admin/                       # Admin-specific components
+│       │   │   ├── 📄 AdminNavigation.jsx      # Admin sidebar/menu
+│       │   │   ├── 📄 MovieForm.jsx            # Movie create/edit form
+│       │   │   ├── 📄 StudioForm.jsx           # Studio create/edit form
+│       │   │   ├── 📄 ShowtimeForm.jsx         # Showtime create/edit form
+│       │   │   ├── 📄 DataTable.jsx            # Reusable data table
+│       │   │   └── 📄 AdminCard.jsx            # Admin dashboard cards
+│       │   │
+│       │   └── 📁 user/                        # User-specific components
+│       │       ├── 📄 MovieCard.jsx            # Movie display card
+│       │       ├── 📄 SeatMap.jsx              # Seat selection (simplified)
+│       │       ├── 📄 BookingSummary.jsx       # Booking confirmation
+│       │       └── 📄 UserNavigation.jsx       # User menu
+│       │
+│       ├── 📁 pages/                           # PAGE COMPONENTS (perlu dibuat)
+│       │   ├── 📁 admin/                       # Admin pages
+│       │   │   ├── 📄 AdminDashboard.jsx       # Admin main dashboard
+│       │   │   ├── 📄 MovieManager.jsx         # Movies CRUD page
+│       │   │   ├── 📄 StudioManager.jsx        # Studios CRUD page
+│       │   │   ├── 📄 ShowtimeManager.jsx      # Showtimes CRUD page
+│       │   │   └── 📄 BookingManager.jsx       # Bookings management
+│       │   │
+│       │   ├── 📁 user/                        # User pages
+│       │   │   ├── 📄 UserDashboard.jsx        # User main page
+│       │   │   ├── 📄 MovieList.jsx            # Browse movies
+│       │   │   ├── 📄 MovieDetail.jsx          # Movie details & showtimes
+│       │   │   ├── 📄 BookingPage.jsx          # Booking process
+│       │   │   └── 📄 BookingHistory.jsx       # User's booking history
+│       │   │
+│       │   └── 📁 auth/                        # Auth pages
+│       │       ├── 📄 Login.jsx                # Simple login
+│       │       └── 📄 RoleSwitch.jsx           # Admin/User role switch
+│       │
+│       ├── 📁 services/                        # API SERVICES (perlu dibuat)
+│       │   ├── 📄 api.js                       # Axios base configuration
+│       │   ├── 📄 movieService.js              # Movies API calls
+│       │   ├── 📄 studioService.js             # Studios API calls
+│       │   ├── 📄 showtimeService.js           # Showtimes API calls
+│       │   ├── 📄 bookingService.js            # Bookings API calls
+│       │   ├── 📄 userService.js               # Users API calls
+│       │   └── 📄 authService.js               # Simple auth API calls
+│       │
+│       ├── 📁 context/                         # REACT CONTEXT (perlu dibuat)
+│       │   ├── 📄 AuthContext.js               # User authentication state
+│       │   └── 📄 AppContext.js                # Global app state
+│       │
+│       ├── 📁 hooks/                           # CUSTOM HOOKS (perlu dibuat)
+│       │   ├── 📄 useAuth.js                   # Authentication hook
+│       │   ├── 📄 useApi.js                    # API calls hook
+│       │   └── 📄 useLocalStorage.js           # LocalStorage hook
+│       │
+│       ├── 📁 utils/                           # UTILITIES (perlu dibuat)
+│       │   ├── 📄 constants.js                 # App constants
+│       │   ├── 📄 helpers.js                   # Helper functions
+│       │   ├── 📄 formatters.js                # Data formatters (date, currency)
+│       │   └── 📄 validation.js                # Form validation
+│       │
+│       └── 📁 styles/                          # STYLING (perlu dibuat)
+│           ├── 📄 globals.css                  # Global styles
+│           ├── 📄 variables.css                # CSS variables
+│           ├── 📄 components.css               # Component styles
+│           └── 📄 pages.css                    # Page-specific styles
+│
+└── 📁 docs/                                    # DOCUMENTATION (perlu dibuat)
+    ├── 📄 API_Documentation.md                 # API endpoints documentation
+    ├── 📄 Database_Schema.md                   # Database design
+    ├── 📄 Installation_Guide.md                # Setup instructions
+    └── 📄 User_Manual.md                       # How to use the app
+```
+
+## PENJELASAN FUNGSI SETIAP FOLDER
+----------------------------------
+
+### 🚀 BACKEND (my-Backend-TiketGercep/)
+
+#### 📁 config/
+**Fungsi**: Konfigurasi aplikasi dan koneksi
+- `Database.js` ✅ - Koneksi ke MySQL database
+- `cors.js` - Konfigurasi Cross-Origin Resource Sharing
+- `server.js` - Konfigurasi server Express
+
+#### 📁 models/
+**Fungsi**: Definisi struktur database (Sequelize ORM)
+- Setiap file mendefinisikan tabel database
+- Hubungan antar tabel (associations)
+- Validasi data
+
+#### 📁 controllers/
+**Fungsi**: Logic bisnis aplikasi
+- Proses CRUD (Create, Read, Update, Delete)
+- Validasi input dari frontend
+- Komunikasi dengan database melalui models
+
+#### 📁 routes/
+**Fungsi**: Definisi endpoint API
+- Routing HTTP requests (GET, POST, PUT, DELETE)
+- Menghubungkan URL dengan controller functions
+- Middleware integration
+
+#### 📁 middleware/
+**Fungsi**: Fungsi yang dijalankan sebelum controller
+- Authentication check (sederhana)
+- Input validation
+- Error handling
+- Logging requests
+
+#### 📁 utils/
+**Fungsi**: Fungsi helper yang digunakan berulang
+- Response standardization
+- Code generators (booking code)
+- Date/time helpers
+
+#### 📁 database/
+**Fungsi**: File-file terkait database
+- Sample data (seeders)
+- Database schema backup
+- Migration scripts (optional)
+
+### 🎨 FRONTEND (my-frontend-tiketgercep/)
+
+#### 📁 src/components/
+**Fungsi**: Komponen React yang dapat digunakan berulang
+
+**📁 common/**: Komponen universal
+- Header, Footer, Loading, Modal, Button
+
+**📁 admin/**: Komponen khusus admin
+- Forms untuk CRUD operations
+- Admin navigation
+- Data tables
+
+**📁 user/**: Komponen khusus user
+- Movie cards, seat selection
+- User navigation
+
+#### 📁 src/pages/
+**Fungsi**: Halaman lengkap aplikasi (page components)
+
+**📁 admin/**: Halaman admin
+- Dashboard, Movie Manager, Studio Manager, dll
+
+**📁 user/**: Halaman user
+- Movie browsing, booking process, history
+
+**📁 auth/**: Halaman authentication
+- Login, role switching
+
+#### 📁 src/services/
+**Fungsi**: Komunikasi dengan backend API
+- Axios configuration
+- API calls untuk setiap entity
+- Error handling untuk API
+
+#### 📁 src/context/
+**Fungsi**: State management global (React Context)
+- User authentication state
+- Global app settings
+- Shared data antar komponen
+
+#### 📁 src/hooks/
+**Fungsi**: Custom React hooks
+- Reusable logic
+- State management
+- Side effects handling
+
+#### 📁 src/utils/
+**Fungsi**: Helper functions untuk frontend
+- Constants dan configuration
+- Data formatting (tanggal, mata uang)
+- Form validation
+
+#### 📁 src/styles/
+**Fungsi**: Styling dan CSS
+- Global styles
+- CSS variables
+- Component-specific styles
+
+### 📚 DOCUMENTATION (docs/)
+**Fungsi**: Dokumentasi lengkap project
+- API documentation
+- Database schema
+- Installation guide
+- User manual
+
+## PRIORITAS PEMBUATAN
+----------------------
+
+### 🔥 HIGH PRIORITY (Wajib untuk UAS):
+1. **Backend**: middleware/, utils/ folders
+2. **Frontend**: components/, pages/, services/ folders
+3. **Documentation**: API_Documentation.md
+
+### 🟡 MEDIUM PRIORITY (Nice to have):
+1. **Frontend**: context/, hooks/ folders
+2. **Backend**: database/ folder
+3. **Documentation**: Database_Schema.md
+
+### 🟢 LOW PRIORITY (Optional):
+1. **Frontend**: styles/ folder (gunakan Bulma)
+2. **Documentation**: Installation_Guide.md, User_Manual.md
+
+## FILE YANG PERLU DIBUAT
+--------------------------
+
+### ✅ SUDAH ADA:
+- Backend: models/, controllers/, routes/, config/Database.js
+- Frontend: basic React setup
+
+### ❌ PERLU DIBUAT:
+- Backend: 15 files (middleware, utils, database)
+- Frontend: 35+ files (components, pages, services)
+- Documentation: 4 files
+
+## NEXT STEPS
+-------------
+1. Buat struktur folder yang missing
+2. Implementasi middleware dan utils (backend)
+3. Buat komponen React dasar (frontend)
+4. Setup API services dengan Axios
+5. Implementasi halaman admin dan user
+6. Testing dan dokumentasi
+
+**FOKUS UAS**: Core functionality (CRUD + Booking) > Advanced features

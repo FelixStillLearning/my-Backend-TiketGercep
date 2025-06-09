@@ -1,0 +1,369 @@
+# TIKET GERCEP - UAS SIMPLE GUIDE
+=====================================
+
+## OVERVIEW
+-----------
+TiketGercep adalah aplikasi pemesanan tiket bioskop sederhana untuk UAS Pemrograman Web Lanjut.
+Fokus utama: **Mendemonstrasikan JavaScript Skills + API Integration + Database Connectivity**
+
+**TEKNOLOGI YANG DIGUNAKAN:**
+- Frontend: React.js + Bulma CSS
+- Backend: Node.js + Express.js
+- Database: MySQL (via Laragon)
+- ORM: Sequelize
+- HTTP Client: Axios
+
+**TUJUAN UAS:**
+✓ Menunjukkan kemampuan JavaScript (frontend & backend)
+✓ Implementasi REST API yang berfungsi
+✓ Koneksi dan operasi database (CRUD)
+✓ Alur data yang benar antara frontend-backend-database
+
+## STRUKTUR PROJECT
+-------------------
+```
+📁 my-Backend-TiketGercep/          # Backend (Node.js/Express)
+  ├── models/                       # 6 model Sequelize
+  ├── controllers/                  # 6 controller dengan CRUD
+  ├── routes/                       # 6 route file
+  ├── config/                       # Database config
+  └── app.js                        # Main server
+
+📁 my-frontend-tiketgercep/         # Frontend (React)
+  ├── src/
+  │   ├── components/               # React components
+  │   ├── pages/                    # Page components
+  │   ├── services/                 # Axios API calls
+  │   └── App.js                    # Main app
+  └── public/
+```
+
+## FITUR YANG AKAN DIIMPLEMENTASI
+----------------------------------
+
+### A. ADMIN FEATURES (CRUD)
+1. **Movies Management**
+   - Lihat daftar film
+   - Tambah film baru
+   - Edit informasi film
+   - Hapus film
+
+2. **Studios Management**
+   - Lihat daftar studio
+   - Tambah studio baru
+   - Edit studio
+   - Hapus studio
+
+3. **Showtimes Management**
+   - Lihat jadwal tayang
+   - Tambah jadwal baru
+   - Edit jadwal
+   - Hapus jadwal
+
+### B. USER FEATURES
+1. **Movie Browsing**
+   - Lihat daftar film yang sedang tayang
+   - Lihat detail film
+
+2. **Ticket Booking**
+   - Pilih film dan jadwal tayang
+   - Pilih kursi
+   - Konfirmasi booking
+   - Lihat history booking
+
+### C. SIMPLIFIED FEATURES (UAS-APPROPRIATE)
+- **Authentication**: Simple username/password (tanpa JWT)
+- **Role Management**: Admin/User role switching
+- **No Payment**: Fokus pada booking flow
+- **No Real-time**: Statis seat selection
+- **Local Development**: Menggunakan Laragon
+
+## STEP-BY-STEP IMPLEMENTATION
+-------------------------------
+
+### PHASE 1: Setup & Testing API
+1. **Setup Backend**
+   ```bash
+   cd my-Backend-TiketGercep
+   npm install
+   npm start
+   ```
+
+2. **Test API dengan REST Client**
+   - Test semua endpoint CRUD
+   - Verifikasi koneksi database
+   - Pastikan data flow benar
+
+3. **Setup Frontend**
+   ```bash
+   cd my-frontend-tiketgercep
+   npm install
+   npm start
+   ```
+
+### PHASE 2: Admin Dashboard
+1. **Create Admin Components**
+   - AdminDashboard.jsx
+   - MovieManager.jsx
+   - StudioManager.jsx
+   - ShowtimeManager.jsx
+
+2. **Implement API Services**
+   - movieService.js (CRUD operations)
+   - studioService.js (CRUD operations)
+   - showtimeService.js (CRUD operations)
+
+3. **Build Admin UI**
+   - Forms untuk Create/Edit
+   - Tables untuk Read/List
+   - Buttons untuk Delete
+   - Navigation antar halaman
+
+### PHASE 3: User Interface
+1. **Create User Components**
+   - MovieList.jsx
+   - MovieDetail.jsx
+   - BookingForm.jsx
+   - BookingHistory.jsx
+
+2. **Implement Booking Flow**
+   - Pilih film dari daftar
+   - Pilih showtime yang tersedia
+   - Pilih kursi (simplified)
+   - Submit booking
+
+### PHASE 4: Integration & Testing
+1. **Connect Frontend-Backend**
+   - Setup Axios base URL
+   - Handle API responses
+   - Error handling
+
+2. **Test Complete Flow**
+   - Admin: CRUD semua entitas
+   - User: Booking process
+   - Data persistence
+
+## API ENDPOINTS REFERENCE
+---------------------------
+
+### Movies
+- GET /movies - List semua film
+- GET /movies/:id - Detail film
+- POST /movies - Tambah film baru
+- PUT /movies/:id - Update film
+- DELETE /movies/:id - Hapus film
+
+### Studios  
+- GET /studios - List semua studio
+- GET /studios/:id - Detail studio
+- POST /studios - Tambah studio baru
+- PUT /studios/:id - Update studio
+- DELETE /studios/:id - Hapus studio
+
+### Showtimes
+- GET /showtimes - List semua jadwal
+- GET /showtimes/:id - Detail jadwal
+- POST /showtimes - Tambah jadwal baru
+- PUT /showtimes/:id - Update jadwal
+- DELETE /showtimes/:id - Hapus jadwal
+
+### Bookings
+- GET /bookings - List semua booking
+- GET /bookings/:id - Detail booking
+- POST /bookings - Buat booking baru
+- PUT /bookings/:id - Update booking
+- DELETE /bookings/:id - Hapus booking
+
+### Users
+- GET /users - List semua user
+- GET /users/:id - Detail user
+- POST /users - Registrasi user baru
+- PUT /users/:id - Update user
+- DELETE /users/:id - Hapus user
+
+### Seats
+- GET /seats - List semua kursi
+- GET /seats/studio/:id - Kursi per studio
+- POST /seats - Tambah kursi baru
+- PUT /seats/:id - Update kursi
+- DELETE /seats/:id - Hapus kursi
+
+## KOMPONEN REACT YANG PERLU DIBUAT
+------------------------------------
+
+### Admin Components
+```javascript
+// AdminDashboard.jsx - Halaman utama admin
+// MovieManager.jsx - CRUD movies
+// StudioManager.jsx - CRUD studios  
+// ShowtimeManager.jsx - CRUD showtimes
+// AdminNavigation.jsx - Menu admin
+```
+
+### User Components
+```javascript
+// UserDashboard.jsx - Halaman utama user
+// MovieList.jsx - Daftar film
+// MovieCard.jsx - Card individual film
+// BookingForm.jsx - Form booking tiket
+// SeatSelector.jsx - Pilih kursi (simplified)
+// BookingHistory.jsx - History booking user
+```
+
+### Shared Components
+```javascript
+// Header.jsx - Header aplikasi
+// Navigation.jsx - Main navigation
+// LoginForm.jsx - Simple login form
+// Loading.jsx - Loading indicator
+```
+
+## API SERVICES (AXIOS)
+-----------------------
+
+### movieService.js
+```javascript
+import axios from 'axios';
+
+const API_BASE = 'http://localhost:3000';
+
+export const movieService = {
+  getAll: () => axios.get(`${API_BASE}/movies`),
+  getById: (id) => axios.get(`${API_BASE}/movies/${id}`),
+  create: (data) => axios.post(`${API_BASE}/movies`, data),
+  update: (id, data) => axios.put(`${API_BASE}/movies/${id}`, data),
+  delete: (id) => axios.delete(`${API_BASE}/movies/${id}`)
+};
+```
+
+### studioService.js, showtimeService.js, bookingService.js
+```javascript
+// Similar pattern untuk semua entities
+```
+
+## DATABASE SCHEMA SIMPLIFIED
+------------------------------
+
+### Key Tables untuk UAS:
+1. **movies** - Data film
+2. **studios** - Data studio/ruang
+3. **showtimes** - Jadwal tayang
+4. **bookings** - Data booking
+5. **users** - Data user/admin
+6. **seats** - Data kursi (optional untuk simplified version)
+
+### Sample Data untuk Testing:
+```sql
+-- Insert sample movies
+INSERT INTO movies (title, genre, duration, rating, status) VALUES
+('Avengers', 'Action', 120, 'PG-13', 'now_playing'),
+('Titanic', 'Romance', 180, 'PG-13', 'now_playing');
+
+-- Insert sample studios  
+INSERT INTO studios (studio_name, total_seats, rows, seats_per_row) VALUES
+('Studio 1', 50, 5, 10),
+('Studio 2', 40, 4, 10);
+
+-- Insert sample showtimes
+INSERT INTO showtimes (movie_id, studio_id, show_date, show_time, ticket_price) VALUES
+(1, 1, '2024-01-15', '14:00:00', 35000),
+(2, 2, '2024-01-15', '19:00:00', 40000);
+```
+
+## TESTING CHECKLIST
+--------------------
+
+### Backend Testing (REST Client):
+□ GET /movies - Returns movie list
+□ POST /movies - Creates new movie
+□ PUT /movies/:id - Updates movie
+□ DELETE /movies/:id - Deletes movie
+□ Similar untuk studios, showtimes, bookings
+
+### Frontend Testing:
+□ Admin dapat CRUD movies
+□ Admin dapat CRUD studios
+□ Admin dapat CRUD showtimes
+□ User dapat view movies
+□ User dapat membuat booking
+□ Navigation berfungsi dengan baik
+
+### Integration Testing:
+□ Frontend dapat fetch data dari backend
+□ Forms dapat submit data ke backend
+□ Data tersimpan di MySQL database
+□ Error handling berjalan dengan baik
+
+## PENILAIAN UAS FOCUS
+----------------------
+
+### JavaScript Skills (40%)
+- React components yang berfungsi
+- Event handling dan state management
+- API calls dengan Axios
+- Data manipulation dan rendering
+
+### API Integration (30%)
+- REST API endpoints yang lengkap
+- HTTP methods (GET, POST, PUT, DELETE)
+- Request/Response handling
+- Error handling
+
+### Database Operations (30%)
+- CRUD operations yang berfungsi
+- Database schema yang logical
+- Data relationships
+- Query optimization (basic)
+
+## SIMPLIFIED IMPLEMENTATION NOTES
+----------------------------------
+
+### Authentication (Simplified):
+```javascript
+// Simple role-based access
+const user = {
+  username: 'admin',
+  role: 'admin' // or 'user'
+};
+
+// Switch role tanpa complex JWT
+if (user.role === 'admin') {
+  // Show admin dashboard
+} else {
+  // Show user dashboard
+}
+```
+
+### Booking Flow (Simplified):
+```javascript
+// Tanpa real-time seat selection
+// Tanpa payment integration
+// Focus pada data flow
+
+const booking = {
+  user_id: 1,
+  showtime_id: 1,
+  total_seats: 2,
+  total_price: 70000,
+  status: 'confirmed'
+};
+```
+
+### Development Environment:
+- **Laragon**: Local server environment
+- **MySQL**: Database via phpMyAdmin
+- **VS Code**: Development editor
+- **REST Client**: API testing (Postman/Insomnia)
+
+## CONCLUSION
+-------------
+Fokus utama UAS ini adalah mendemonstrasikan kemampuan JavaScript fullstack development dengan implementasi API yang berfungsi dan koneksi database yang benar. Kompleksitas fitur sengaja disederhanakan agar fokus pada core technical skills yang dibutuhkan untuk UAS Pemrograman Web Lanjut.
+
+**SUCCESS CRITERIA:**
+✓ Aplikasi berjalan lokal (frontend + backend)
+✓ API endpoints berfungsi dan teruji
+✓ Database operations (CRUD) bekerja
+✓ Data flow frontend ↔ backend ↔ database
+✓ Admin dapat manage data
+✓ User dapat booking tiket
+✓ Code quality dan best practices
