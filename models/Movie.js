@@ -53,7 +53,3 @@ const Movie = db.define("Movie", {
 });
 
 export default Movie;
-
-(async() => {
-    await db.sync();
-})();
