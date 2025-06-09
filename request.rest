@@ -56,6 +56,7 @@ Content-Type: application/json
     "rating":"PG-13",
     "synopsis":"Jake Sully and Ney'tiri have formed a family and are doing everything to stay together.",
     "release_date":"2022-12-16",
+    "status":"ended",
     "poster_url":"https://example.com/avatar2-poster.jpg"
 }
 
@@ -89,9 +90,10 @@ POST http://localhost:5000/api/studios/
 Content-Type: application/json
 
 {
-    "name":"Studio A",
-    "capacity":"150",
-    "type":"IMAX"
+    "studio_name":"Studio A",
+    "total_seats":"250",
+    "rows":"10",
+    "seats_per_row":"25"
 }
 
 ### Get Studio by ID
@@ -102,9 +104,10 @@ PATCH http://localhost:5000/api/studios/1
 Content-Type: application/json
 
 {
-    "name":"Studio A Premium",
-    "capacity":"120",
-    "type":"Premium"
+    "studio_name":"Studio A",
+    "total_seats":"150",
+    "rows":"10",
+    "seats_per_row":"15"
 }
 
 ### Delete Studio
@@ -123,8 +126,9 @@ Content-Type: application/json
 
 {
     "studio_id":"1",
-    "seat_number":"A1",
-    "seat_type":"Regular"
+    "seat_row":"A",
+    "seat_number":"1",
+    "seat_label":"A1"
 }
 
 ### Get Seat by ID
@@ -135,8 +139,9 @@ PATCH http://localhost:5000/api/seats/1
 Content-Type: application/json
 
 {
-    "seat_number":"A1",
-    "seat_type":"Premium"
+    "seat_row":"A",
+    "seat_number":"1",
+    "seat_label":"A1"
 }
 
 ### Delete Seat
@@ -156,9 +161,9 @@ Content-Type: application/json
 {
     "movie_id":"1",
     "studio_id":"1",
-    "showtime_date":"2024-01-15",
-    "showtime_time":"19:30:00",
-    "price":"50000"
+    "show_date":"2024-01-15",
+    "show_time":"19:30:00",
+    "ticket_price":"50000"
 }
 
 ### Get Showtime by ID
@@ -191,8 +196,10 @@ Content-Type: application/json
 {
     "user_id":"1",
     "showtime_id":"1",
-    "booking_date":"2024-01-10",
+    "booking_code":"ABC123",
+    "total_seats":"2",
     "total_price":"100000",
+    "booking_date":"2024-01-10",
     "status":"confirmed"
 }
 
