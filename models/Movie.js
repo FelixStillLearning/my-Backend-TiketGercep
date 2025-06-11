@@ -24,17 +24,20 @@ const Movie = db.define("Movie", {
   genre: {
     type: DataTypes.STRING(100),
     allowNull: false,
-  },  rating: {
+  },
+  rating: {
     type: DataTypes.ENUM("G", "PG", "PG-13", "R", "NC-17"),
     allowNull: false,
   },
   poster_url: {
-    type: DataTypes.STRING(500),
+    type: DataTypes.STRING(500), // ✅ STRING untuk menyimpan path file
     allowNull: true,
+    // Contoh: "uploads/posters/poster-1234567890.jpg"
   },
   trailer_url: {
-    type: DataTypes.STRING(500),
+    type: DataTypes.STRING(500), // ✅ STRING untuk URL YouTube/Vimeo
     allowNull: true,
+    // Contoh: "https://www.youtube.com/watch?v=abc123"
   },
   status: {
     type: DataTypes.ENUM("now_playing", "coming_soon", "ended"),
