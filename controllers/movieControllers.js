@@ -3,7 +3,17 @@ import Movie from "../models/Movie.js";
 // Get all movies
 export const getMovies = async (req, res) => {
   try {
-    const movies = await Movie.findAll();
+    const { status } = req.query;
+    
+    let whereClause = {};
+    if (status) {
+      whereClause.status = status;
+    }
+    
+    const movies = await Movie.findAll({
+      where: whereClause
+    });
+    
     res.json(movies);
   } catch (error) {
     res.status(500).json({ message: error.message });
