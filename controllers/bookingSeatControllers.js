@@ -1,4 +1,6 @@
 import BookingSeat from '../models/BookingSeat.js';
+import Booking from '../models/Booking.js';
+import Seat from '../models/Seat.js';
 
 // Get all booking seats
 export const getBookingSeats = async (req, res) => {
@@ -64,6 +66,35 @@ export const deleteBookingSeat = async (req, res) => {
     if (!bookingSeat) return res.status(404).json({ message: "Booking seat not found" });
     await bookingSeat.destroy();
     res.json({ message: "Booking seat deleted" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Get booked seats by showtime ID
+export const getBookedSeatsByShowtimeId = async (req, res) => {
+  try {
+    const { showtimeId } = req.params;
+    
+    // Get all bookings for this showtime
+    const bookings = await Booking.findAll({
+      where: { 
+        showtime_id: showtimeId,
+        status: 'confirmed' // Only confirmed bookings
+      }
+    });
+    
+    // Get all booking seat records for these bookings
+    const bookingIds = bookings.map(booking => booking.booking_id);
+    const bookingSeats = await BookingSeat.findAll({
+      where: { booking_id: bookingIds },
+      include: [{ 
+        model: Seat, 
+        attributes: ['seat_id', 'seat_row', 'seat_number', 'seat_label'] 
+      }]
+    });
+    
+    res.json(bookingSeats);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

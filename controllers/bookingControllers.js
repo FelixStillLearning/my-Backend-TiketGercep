@@ -56,3 +56,16 @@ export const deleteBooking = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// Get bookings by user ID
+export const getBookingsByUserId = async (req, res) => {
+  try {
+    const bookings = await Booking.findAll({
+      where: { user_id: req.params.userId },
+      order: [['booking_date', 'DESC']]
+    });
+    res.json(bookings);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

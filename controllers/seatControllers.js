@@ -56,3 +56,16 @@ export const deleteSeat = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// Get seats by studio ID
+export const getSeatsByStudioId = async (req, res) => {
+  try {
+    const seats = await Seat.findAll({
+      where: { studio_id: req.params.studioId },
+      order: [['seat_row', 'ASC'], ['seat_number', 'ASC']]
+    });
+    res.json(seats);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

@@ -1,9 +1,21 @@
 import Showtime from "../models/Showtime.js";
 
-// Get all showtimes
+// Get all showtimes with optional filtering
 export const getShowtimes = async (req, res) => {
   try {
-    const showtimes = await Showtime.findAll();
+    const { movie_id, studio_id, show_date } = req.query;
+    
+    // Build filter object based on query parameters
+    const filter = {};
+    if (movie_id) filter.movie_id = movie_id;
+    if (studio_id) filter.studio_id = studio_id;
+    if (show_date) filter.show_date = show_date;
+    
+    const showtimes = await Showtime.findAll({
+      where: filter,
+      order: [['show_date', 'ASC'], ['show_time', 'ASC']]
+    });
+    
     res.json(showtimes);
   } catch (error) {
     res.status(500).json({ message: error.message });
