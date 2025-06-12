@@ -1,4 +1,6 @@
 import Showtime from "../models/Showtime.js";
+import Movie from "../models/Movie.js";
+import Studio from "../models/Studio.js";
 
 // Get all showtimes with optional filtering
 export const getShowtimes = async (req, res) => {
@@ -13,6 +15,16 @@ export const getShowtimes = async (req, res) => {
     
     const showtimes = await Showtime.findAll({
       where: filter,
+      include: [
+        {
+          model: Movie,
+          attributes: ['movie_id', 'title', 'genre', 'duration', 'rating']
+        },
+        {
+          model: Studio,
+          attributes: ['studio_id', 'studio_name', 'total_seats']
+        }
+      ],
       order: [['show_date', 'ASC'], ['show_time', 'ASC']]
     });
     
@@ -25,7 +37,18 @@ export const getShowtimes = async (req, res) => {
 // Get showtime by ID
 export const getShowtimeById = async (req, res) => {
   try {
-    const showtime = await Showtime.findByPk(req.params.id);
+    const showtime = await Showtime.findByPk(req.params.id, {
+      include: [
+        {
+          model: Movie,
+          attributes: ['movie_id', 'title', 'genre', 'duration', 'rating']
+        },
+        {
+          model: Studio,
+          attributes: ['studio_id', 'studio_name', 'total_seats']
+        }
+      ]
+    });
     if (!showtime) return res.status(404).json({ message: "Showtime not found" });
     res.json(showtime);
   } catch (error) {
