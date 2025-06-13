@@ -72,9 +72,36 @@ export const getBookingById = async (req, res) => {
 // Create new booking
 export const createBooking = async (req, res) => {
   try {
-    const { user_id, showtime_id, booking_code, total_seats, total_price, status, booking_date } = req.body;
-    const booking = await Booking.create({ user_id, showtime_id, booking_code, total_seats, total_price, status, booking_date });
-    res.status(201).json({ message: "Booking created", booking_id: booking.booking_id });
+    const { user_id, showtime_id, booking_code, total_seats, total_price, status, booking_date, seats } = req.body;
+    
+    // Create the booking
+    const booking = await Booking.create({ 
+      user_id, 
+      showtime_id, 
+      booking_code, 
+      total_seats, 
+      total_price, 
+      status, 
+      booking_date 
+    });
+    
+    // If seats are provided, create booking seats
+    if (seats && seats.length > 0) {
+      const BookingSeat = (await import('../models/BookingSeat.js')).default;
+      
+      const bookingSeats = seats.map(seat_id => ({
+        booking_id: booking.booking_id,
+        seat_id: seat_id
+      }));
+      
+      await BookingSeat.bulkCreate(bookingSeats);
+    }
+    
+    res.status(201).json({ 
+      message: "Booking created", 
+      booking_id: booking.booking_id,
+      booking_code: booking.booking_code
+    });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
