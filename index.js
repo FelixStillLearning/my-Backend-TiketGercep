@@ -10,10 +10,19 @@ import showtimeRoute from "./routes/showtimeRoute.js";
 import movieRoute from "./routes/movieRoute.js";
 import studioRoute from "./routes/studioRoute.js";
 import seatRoute from "./routes/seatRoute.js";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// Get __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from the 'uploads' directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
