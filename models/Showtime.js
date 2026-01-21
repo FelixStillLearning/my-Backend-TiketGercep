@@ -82,7 +82,3 @@ Showtime.belongsTo(Studio, {
 });
 
 export default Showtime;
-
-(async() => {
-    await db.sync();
-})();

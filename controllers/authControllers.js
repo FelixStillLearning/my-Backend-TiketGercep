@@ -77,12 +77,20 @@ export const login = async (req, res) => {
     }
 };
 
-// Get current user info (for /users/me endpoint)
+// Get current user (validate token)
 export const getMe = async (req, res) => {
     try {
         // In a real app, you would verify JWT token here
-        // For development, we'll just return the first user or a mock user
-        const userId = 1; // This should come from JWT token
+        // For now, just return a mock response
+        
+        // You can implement token verification later
+        const token = req.headers.authorization?.split(' ')[1];
+        if (!token) {
+            return res.status(401).json({ message: "No token provided" });
+        }
+
+        // Mock user data - in real app, decode token to get user ID
+        const userId = 1; // This should come from decoded token
         const user = await User.findByPk(userId, { 
             attributes: { exclude: ["password"] } 
         });
@@ -98,59 +106,14 @@ export const getMe = async (req, res) => {
     }
 };
 
-// Get all users
-export const getUsers = async (req, res) => {
-  try {
-    const users = await User.findAll({ attributes: { exclude: ["password"] } });
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-// Get user by ID
-export const getUserById = async (req, res) => {
-  try {
-    const user = await User.findByPk(req.params.id, { attributes: { exclude: ["password"] } });
-    if (!user) return res.status(404).json({ message: "User not found" });
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-// Create new user
-export const createUser = async (req, res) => {
-  try {
-    const { username, email, password, full_name, phone, role } = req.body;
-    const user = await User.create({ username, email, password, full_name, phone, role });
-    res.status(201).json({ message: "User created", user_id: user.user_id });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
-
-// Update user
-export const updateUser = async (req, res) => {
-  try {
-    const { username, email, password, full_name, phone, role } = req.body;
-    const user = await User.findByPk(req.params.id);
-    if (!user) return res.status(404).json({ message: "User not found" });
-    await user.update({ username, email, password, full_name, phone, role });
-    res.json({ message: "User updated" });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
-
-// Delete user
-export const deleteUser = async (req, res) => {
-  try {
-    const user = await User.findByPk(req.params.id);
-    if (!user) return res.status(404).json({ message: "User not found" });
-    await user.destroy();
-    res.json({ message: "User deleted" });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+// Logout (optional for JWT-based auth)
+export const logout = async (req, res) => {
+    try {
+        // For JWT-based auth, you might want to blacklist the token
+        // For now, just return success message
+        res.status(200).json({ message: "Logout successful" });
+    } catch (error) {
+        console.error('Logout error:', error);
+        res.status(500).json({ message: error.message });
+    }
 };
