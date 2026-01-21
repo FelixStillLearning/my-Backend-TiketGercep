@@ -91,3 +91,7 @@ Booking.belongsTo(Showtime, {
 });
 
 export default Booking;
+
+// (async() => {
+//     await db.sync();
+// })();

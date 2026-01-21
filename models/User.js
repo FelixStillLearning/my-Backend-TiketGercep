@@ -26,7 +26,7 @@ const User = db.define('User', {
     full_name: {
         type: DataTypes.STRING(100),
         allowNull: false,
-    },    phone: {
+    }, phone: {
         type: DataTypes.STRING(15),
         allowNull: true,
     },
@@ -42,3 +42,7 @@ const User = db.define('User', {
 });
 
 export default User;
+
+// (async() => {
+//     await db.sync();
+// })();

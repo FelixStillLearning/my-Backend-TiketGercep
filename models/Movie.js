@@ -24,7 +24,7 @@ const Movie = db.define("Movie", {
   genre: {
     type: DataTypes.STRING(100),
     allowNull: false,
-  },  rating: {
+  }, rating: {
     type: DataTypes.ENUM("G", "PG", "PG-13", "R", "NC-17"),
     allowNull: false,
   },
@@ -52,3 +52,7 @@ const Movie = db.define("Movie", {
 });
 
 export default Movie;
+
+// (async() => {
+//     await db.sync();
+// })();

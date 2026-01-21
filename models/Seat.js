@@ -61,3 +61,7 @@ Seat.belongsTo(Studio, {
 });
 
 export default Seat;
+
+// (async() => {
+//     await db.sync();
+// })();

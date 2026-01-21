@@ -33,3 +33,7 @@ const Studio = db.define("Studio", {
 });
 
 export default Studio;
+
+// (async() => {
+//     await db.sync();
+// })();
